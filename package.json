@@ -1,0 +1,16 @@
+{
+  "name": "knowledge-arc-webinar",
+  "version": "1.0.0",
+  "description": "The Knowledge ARC 웨비나 등록 페이지",
+  "main": "index.html",
+  "scripts": {
+    "dev": "live-server --port=3000",
+    "build": "echo 'Build completed'"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.3.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

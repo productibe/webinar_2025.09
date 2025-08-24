@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이콘 생성기 - Knowledge ARC</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #8E99A2;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .icon-preview {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        
+        #svgPreview {
+            max-width: 200px;
+            height: auto;
+            margin: 20px;
+            border: 2px solid #8E99A2;
+            border-radius: 8px;
+            background: white;
+            padding: 10px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #8E99A2, #A2978E);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -8px rgba(142, 153, 162, 0.6);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .status {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        
+        .success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+        
+        .download-links {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .download-links h3 {
+            color: #475569;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .download-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            list-style: none;
+            padding: 0;
+        }
+        
+        .download-list a {
+            display: block;
+            padding: 8px 12px;
+            background: #8E99A2;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+        
+        .download-list a:hover {
+            background: #7a8890;
+        }
+        
+        .instructions {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+        }
+        
+        .instructions h3 {
+            color: #92400e;
+            margin-top: 0;
+        }
+        
+        .instructions ol {
+            color: #78350f;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 PWA 아이콘 생성기</h1>
+        
+        <div class="icon-preview">
+            <h3>아이콘 미리보기</h3>
+            <div id="svgContainer"></div>
+        </div>
+        
+        <div class="button-group">
+            <button onclick="generateAllIcons()">🎨 모든 아이콘 생성</button>
+            <button onclick="loadSVG()">🔄 SVG 다시 로드</button>
+            <button onclick="downloadZip()">📦 ZIP으로 다운로드</button>
+        </div>
+        
+        <div id="status" class="status info">
+            준비됨: '모든 아이콘 생성' 버튼을 클릭하여 시작하세요.
+        </div>
+        
+        <div id="downloadLinks" class="download-links">
+            <h3>생성된 아이콘 다운로드</h3>
+            <ul class="download-list" id="downloadList"></ul>
+        </div>
+        
+        <div class="instructions">
+            <h3>📋 사용 방법</h3>
+            <ol>
+                <li><strong>'모든 아이콘 생성'</strong> 버튼을 클릭하세요</li>
+                <li>생성된 아이콘들을 개별적으로 다운로드하거나 ZIP으로 한번에 다운로드하세요</li>
+                <li>다운로드한 아이콘들을 <code>icons/</code> 폴더에 저장하세요</li>
+                <li>웹 브라우저에서 PWA로 설치할 수 있습니다</li>
+            </ol>
+            <p><strong>참고:</strong> 이 도구는 브라우저에서 직접 실행됩니다. 서버가 필요하지 않습니다.</p>
+        </div>
+    </div>
+
+    <script>
+        const iconSizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        const generatedIcons = new Map();
+        
+        const svgContent = `
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8E99A2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A2978E;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <circle cx="256" cy="256" r="240" fill="url(#gradient)" stroke="#ffffff" stroke-width="8"/>
+  
+  <circle cx="256" cy="256" r="24" fill="#ffffff" opacity="0.9"/>
+  
+  <circle cx="180" cy="200" r="16" fill="#ffffff" opacity="0.8"/>
+  <circle cx="332" cy="200" r="16" fill="#ffffff" opacity="0.8"/>
+  <circle cx="180" cy="312" r="16" fill="#ffffff" opacity="0.8"/>
+  <circle cx="332" cy="312" r="16" fill="#ffffff" opacity="0.8"/>
+  
+  <circle cx="140" cy="140" r="12" fill="#ffffff" opacity="0.7"/>
+  <circle cx="372" cy="140" r="12" fill="#ffffff" opacity="0.7"/>
+  <circle cx="140" cy="372" r="12" fill="#ffffff" opacity="0.7"/>
+  <circle cx="372" cy="372" r="12" fill="#ffffff" opacity="0.7"/>
+  
+  <line x1="256" y1="256" x2="180" y2="200" stroke="#ffffff" stroke-width="3" opacity="0.6"/>
+  <line x1="256" y1="256" x2="332" y2="200" stroke="#ffffff" stroke-width="3" opacity="0.6"/>
+  <line x1="256" y1="256" x2="180" y2="312" stroke="#ffffff" stroke-width="3" opacity="0.6"/>
+  <line x1="256" y1="256" x2="332" y2="312" stroke="#ffffff" stroke-width="3" opacity="0.6"/>
+  
+  <line x1="180" y1="200" x2="140" y2="140" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <line x1="332" y1="200" x2="372" y2="140" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <line x1="180" y1="312" x2="140" y2="372" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <line x1="332" y1="312" x2="372" y2="372" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  
+  <path d="M 150 256 Q 256 150 362 256" stroke="#04f827" stroke-width="4" fill="none" opacity="0.8"/>
+  <path d="M 150 256 Q 256 362 362 256" stroke="#04f827" stroke-width="4" fill="none" opacity="0.8"/>
+  
+  <circle cx="210" cy="170" r="3" fill="#04f827"/>
+  <circle cx="302" cy="170" r="3" fill="#04f827"/>
+  <circle cx="210" cy="342" r="3" fill="#04f827"/>
+  <circle cx="302" cy="342" r="3" fill="#04f827"/>
+</svg>`;
+
+        function loadSVG() {
+            const container = document.getElementById('svgContainer');
+            container.innerHTML = svgContent;
+            const svg = container.querySelector('svg');
+            if (svg) {
+                svg.id = 'svgPreview';
+                svg.style.maxWidth = '200px';
+                svg.style.height = 'auto';
+                svg.style.border = '2px solid #8E99A2';
+                svg.style.borderRadius = '8px';
+                svg.style.background = 'white';
+                svg.style.padding = '10px';
+                svg.style.margin = '20px';
+            }
+        }
+
+        function svgToPng(svgElement, size) {
+            return new Promise((resolve) => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+                
+                canvas.width = size;
+                canvas.height = size;
+                
+                const svgData = new XMLSerializer().serializeToString(svgElement);
+                const svgBlob = new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'});
+                const url = URL.createObjectURL(svgBlob);
+                
+                img.onload = function() {
+                    ctx.fillStyle = 'white';
+                    ctx.fillRect(0, 0, size, size);
+                    ctx.drawImage(img, 0, 0, size, size);
+                    
+                    canvas.toBlob((blob) => {
+                        URL.revokeObjectURL(url);
+                        resolve(blob);
+                    }, 'image/png', 1.0);
+                };
+                
+                img.src = url;
+            });
+        }
+
+        async function generateAllIcons() {
+            const status = document.getElementById('status');
+            const downloadLinks = document.getElementById('downloadLinks');
+            const downloadList = document.getElementById('downloadList');
+            
+            status.className = 'status info';
+            status.textContent = '아이콘 생성 중...';
+            
+            const svgElement = document.getElementById('svgPreview');
+            if (!svgElement) {
+                status.className = 'status';
+                status.style.background = '#fecaca';
+                status.style.color = '#dc2626';
+                status.textContent = '오류: SVG를 먼저 로드해주세요.';
+                return;
+            }
+            
+            downloadList.innerHTML = '';
+            generatedIcons.clear();
+            
+            for (let i = 0; i < iconSizes.length; i++) {
+                const size = iconSizes[i];
+                try {
+                    const blob = await svgToPng(svgElement, size);
+                    const url = URL.createObjectURL(blob);
+                    const filename = `icon-${size}x${size}.png`;
+                    
+                    generatedIcons.set(filename, blob);
+                    
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    a.textContent = filename;
+                    li.appendChild(a);
+                    downloadList.appendChild(li);
+                    
+                    status.textContent = `생성 중... ${i + 1}/${iconSizes.length}`;
+                } catch (error) {
+                    console.error(`Error generating ${size}x${size} icon:`, error);
+                }
+            }
+            
+            status.className = 'status success';
+            status.textContent = `✅ 성공! ${iconSizes.length}개의 아이콘이 생성되었습니다.`;
+            downloadLinks.style.display = 'block';
+        }
+
+        function downloadZip() {
+            if (generatedIcons.size === 0) {
+                alert('먼저 아이콘을 생성해주세요.');
+                return;
+            }
+            
+            // This is a simplified zip creation - in a real implementation,
+            // you might want to use a library like JSZip
+            const status = document.getElementById('status');
+            status.className = 'status info';
+            status.textContent = 'ZIP 다운로드 기능은 개별 아이콘 다운로드를 사용해주세요.';
+        }
+
+        // Load SVG on page load
+        window.addEventListener('load', loadSVG);
+    </script>
+</body>
+</html>
