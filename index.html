@@ -201,7 +201,7 @@
                 <!-- 참여 현황 -->
                 <div class="mt-12 flex items-center justify-center space-x-8 text-white/80">
                     <div class="text-center">
-                        <div class="text-2xl font-bold" id="registrations">247</div>
+                        <div class="text-2xl font-bold" id="registrations">00</div>
                         <div class="text-sm">현재 등록자</div>
                     </div>
                     <div class="w-px h-8 bg-white/30"></div>
@@ -580,7 +580,7 @@
                             
                             <!-- 출간 도서 -->
                             <div class="flex flex-wrap gap-4">
-                                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-xl shadow-lg flex items-center space-x-3 hover:shadow-xl transition-all">
+                                <a href="https://www.yes24.com/product/goods/129855656" target="_blank" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-xl shadow-lg flex items-center space-x-3 hover:shadow-xl transition-all">
                                     <div class="w-10 h-12 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
                                         <span class="text-xs font-bold">📚</span>
                                     </div>
@@ -588,8 +588,8 @@
                                         <div class="font-bold text-sm">제텔카스텐 & 옵시디언</div>
                                         <div class="text-xs text-blue-100">(2024)</div>
                                     </div>
-                                </div>
-                                <div class="bg-gradient-to-r from-amber-500 to-amber-600 text-white p-4 rounded-xl shadow-lg flex items-center space-x-3 hover:shadow-xl transition-all">
+                                </a>
+                                <a href="https://www.yes24.com/product/goods/68868271" target="_blank" class="bg-gradient-to-r from-amber-500 to-amber-600 text-white p-4 rounded-xl shadow-lg flex items-center space-x-3 hover:shadow-xl transition-all">
                                     <div class="w-10 h-12 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
                                         <span class="text-xs font-bold">📖</span>
                                     </div>
@@ -597,7 +597,7 @@
                                         <div class="font-bold text-sm">거의 모든 것의 기록</div>
                                         <div class="text-xs text-amber-100">(2019)</div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -879,7 +879,7 @@
                         <div class="text-sm text-gray-300">참가비</div>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-amber-400" id="final-countdown">247</div>
+                        <div class="text-3xl font-bold text-amber-400" id="final-countdown">00</div>
                         <div class="text-sm text-gray-300">현재 등록자</div>
                     </div>
                 </div>
@@ -1024,21 +1024,15 @@
             
             let currentCount = localStorage.getItem('webinar-registrations');
             if (!currentCount) {
-                // 초기값 설정 (247을 시작점으로 하되 약간의 랜덤성 추가)
-                currentCount = 247 + Math.floor(Math.random() * 53); // 247-300 사이
+                // 초기값 설정 (수동으로 00 설정)
+                currentCount = 0; // 00명으로 시작
                 localStorage.setItem('webinar-registrations', currentCount);
             } else {
                 currentCount = parseInt(currentCount);
             }
             
-            // 페이지 로드 시마다 1-3명 증가 (실제 등록 시뮬레이션)
-            const increment = Math.floor(Math.random() * 3) + 1;
-            currentCount += increment;
-            
-            // 최대값 제한 (너무 높아지지 않도록)
-            if (currentCount > 500) {
-                currentCount = Math.floor(Math.random() * 50) + 450; // 450-500 사이로 리셋
-            }
+            // 000명 고정으로 유지
+            // currentCount는 변경하지 않음
             
             localStorage.setItem('webinar-registrations', currentCount);
             return currentCount;
