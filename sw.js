@@ -1,8 +1,9 @@
-const CACHE_NAME = 'knowledge-arc-webinar-v1.0.0';
+const CACHE_NAME = 'knowledge-arc-webinar-v1.0.1';
+// Use relative paths for subpath-safe caching
 const STATIC_CACHE_URLS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
+  'index.html',
+  'manifest.json',
+  'favicon.svg',
   // External CDN resources
   'https://cdn.tailwindcss.com',
   'https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js',
@@ -55,52 +56,52 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Skip external domains (except CDNs we want to cache)
   const url = new URL(event.request.url);
-  const isExternal = url.origin !== self.location.origin;
-  const isCDN = url.hostname.includes('cdn.') || 
+  const isSameOrigin = url.origin === self.location.origin;
+  const isNavigate = event.request.mode === 'navigate';
+  const isCDN = url.hostname.includes('cdn.tailwindcss.com') ||
                 url.hostname.includes('googleapis.com') ||
-                url.hostname.includes('cdnjs.cloudflare.com');
-  
-  if (isExternal && !isCDN) {
+                url.hostname.includes('cdnjs.cloudflare.com') ||
+                url.hostname.includes('gstatic.com');
+
+  // Navigation requests: network first, fallback to cached index.html
+  if (isNavigate) {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match('index.html'))
+    );
+    return;
+  }
+
+  // For non-allowed externals, bypass SW
+  if (!isSameOrigin && !isCDN) {
     return;
   }
 
   event.respondWith(
-    caches.match(event.request)
-      .then((cachedResponse) => {
-        if (cachedResponse) {
-          console.log('Serving from cache:', event.request.url);
-          return cachedResponse;
-        }
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
 
-        return fetch(event.request)
-          .then((response) => {
-            // Don't cache non-success responses
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            // Clone the response before caching
+      return fetch(event.request)
+        .then((response) => {
+          // Cache successful responses, including CORS/opaque
+          if (response && response.ok) {
             const responseToCache = response.clone();
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          })
-          .catch((error) => {
-            console.error('Fetch failed:', error);
-            
-            // Return offline page or fallback for navigation requests
-            if (event.request.mode === 'navigate') {
-              return caches.match('/index.html');
-            }
-            
-            throw error;
-          });
-      })
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
+          }
+          return response;
+        })
+        .catch((error) => {
+          // For same-origin asset requests, try a generic fallback (index.html for SPA)
+          if (isSameOrigin) {
+            return caches.match('index.html');
+          }
+          throw error;
+        });
+    })
   );
 });
 
@@ -131,11 +132,11 @@ self.addEventListener('push', (event) => {
   const data = event.data.json();
   const options = {
     body: data.body || '웨비나에 대한 새로운 정보가 있습니다.',
-    icon: '/icons/icon-192x192.png',
-    badge: '/icons/icon-72x72.png',
+    icon: 'icons/icon-192x192.png',
+    badge: 'icons/icon-72x72.png',
     vibrate: [200, 100, 200],
     data: {
-      url: data.url || '/'
+      url: data.url || './'
     },
     actions: [
       {
@@ -163,7 +164,7 @@ self.addEventListener('notificationclick', (event) => {
     return;
   }
 
-  const url = event.notification.data?.url || '/';
+  const url = event.notification.data?.url || './';
   
   event.waitUntil(
     clients.matchAll({ type: 'window' })
