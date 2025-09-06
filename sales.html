@@ -498,11 +498,15 @@
       <div class="text-center mb-8">
         <h2 class="text-responsive-lg font-bold mb-3">1:1 전략상담 예약</h2>
         <p class="text-gray-600">아래 폼으로 상담을 신청해 주세요. 상담 후 결제 진행됩니다.</p>
+        <p class="text-sm text-gray-500 mt-2">임베드가 보이지 않으면 <a href="https://tally.so/r/wbYBWZ" target="_blank" rel="noopener" class="text-blue-600 underline">새 창에서 열기</a></p>
       </div>
-      <!-- Tally inline embed -->
-      <div class="tally-inline-widget" data-form="wbYBWZ" data-emoji-text="👋" data-auto-close="0" data-hide-title="1" style="width: 100%; height: 760px;"></div>
-      <script async src="https://tally.so/widgets/embed.js"></script>
-      <div class="mt-4 text-center text-sm text-gray-500">임베드가 보이지 않으면 <a href="https://tally.so/r/wbYBWZ" target="_blank" rel="noopener" class="text-blue-600 underline">새 창에서 열기</a></div>
+      <!-- Tally inline embed (iframe) -->
+      <iframe data-tally-src="https://tally.so/r/wbYBWZ?hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0" title="1:1 전략상담 폼"></iframe>
+      <script>
+        (function(){
+          var d=document,s=d.createElement('script'); s.src='https://tally.so/widgets/embed.js'; s.async=true; d.body.appendChild(s);
+        })();
+      </script>
     </div>
   </section>
 
