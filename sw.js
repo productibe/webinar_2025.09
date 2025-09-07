@@ -2,6 +2,8 @@ const CACHE_NAME = 'knowledge-arc-webinar-v1.0.2';
 // Use relative paths for subpath-safe caching
 const STATIC_CACHE_URLS = [
   'index.html',
+  'sales.html',
+  'sales/index.html',
   'manifest.json',
   'favicon.svg',
   // External CDN resources
