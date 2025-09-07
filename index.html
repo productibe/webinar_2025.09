@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Knowledge ARC: AI-Powered Knowledge Mastery | 무료 웨비나</title>
-    <meta name="description" content="읽고, 연결하고, 생산하는 모든 지식 활동의 허들을 AI로 허물어 드립니다. 무료 웨비나 참석하고 AI 파트너 시스템을 구축하세요.">
+    <title>Knowledge ARC | AI-Powered Knowledge Mastery</title>
+    <meta name="description" content="웨비나 다시보기와 등록 페이지를 선택할 수 있습니다.">
     
     <!-- PWA 설정 -->
     <link rel="manifest" href="./manifest.json">
@@ -15,7 +15,6 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- shadcn/ui 스타일 -->
     <style>
         /* 브랜드 컬러 커스텀 */
         :root {
@@ -41,16 +40,6 @@
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
         }
         
-        /* 카드 hover 효과 */
-        .hover-lift {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .hover-lift:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-        
         /* 버튼 스타일 */
         .btn-primary {
             background-color: var(--primary);
@@ -74,21 +63,27 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
         
-        /* 타이머 스타일 */
-        .countdown-timer {
-            background: linear-gradient(45deg, var(--success), var(--success-dark));
-            animation: pulse 2s infinite;
+        /* 카드 hover 효과 */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
         
-        /* 섹션 구분 */
-        .section-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        /* 토글 애니메이션 */
+        .toggle-content {
+            transition: all 0.5s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        
+        .toggle-content.active {
+            max-height: 1000px;
+            opacity: 1;
         }
         
         /* 반응형 텍스트 */
@@ -99,30 +94,10 @@
         .text-responsive-lg {
             font-size: clamp(1.5rem, 4vw, 2.5rem);
         }
-        
-        /* 프로그레스바 */
-        .progress-step {
-            position: relative;
-        }
-        
-        .progress-step::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            right: -50%;
-            width: 100%;
-            height: 2px;
-            background-color: #e5e7eb;
-            transform: translateY(-50%);
-        }
-        
-        .progress-step.completed::after {
-            background-color: var(--primary);
-        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
 
+<body class="bg-gray-50">
     <!-- 네비게이션 -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -134,825 +109,138 @@
                     <span class="font-bold text-gray-900">Knowledge ARC</span>
                 </div>
                 <div class="hidden md:flex items-center space-x-6">
-                    <a href="#about" class="text-gray-600 hover:text-gray-900">웨비나 소개</a>
-                    <a href="#contents" class="text-gray-600 hover:text-gray-900">주요 내용</a>
-                    <a href="#speaker" class="text-gray-600 hover:text-gray-900">강연자</a>
-                    <a href="#register-form" class="btn-primary text-white px-6 py-2 rounded-lg">등록하기</a>
+                    <button onclick="toggleWebinarSection()" class="text-gray-600 hover:text-gray-900">웨비나 등록</button>
                 </div>
                 <!-- 모바일 메뉴 버튼 -->
-                <button class="md:hidden p-2">
+                <button class="md:hidden p-2" id="mobile-menu-btn">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
             </div>
         </div>
+        
+        <!-- 모바일 메뉴 드롭다운 -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white/95 backdrop-blur-sm border-b border-gray-200">
+            <div class="px-4 py-2 space-y-2">
+                <button onclick="toggleWebinarSection()" class="block py-2 text-gray-600 hover:text-gray-900">웨비나 등록</button>
+            </div>
+        </div>
     </nav>
 
-    <!-- Hero 섹션 -->
-    <section class="hero-gradient pt-20 pb-16 min-h-screen flex items-center">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-            <div class="max-w-4xl mx-auto">
-                <!-- 상단 배지 -->
-                <div class="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 mb-8">
-                    <span class="text-sm font-medium">🎯 무료 웨비나</span>
-                    <span class="mx-2">•</span>
-                    <span class="text-sm">90분 집중 워크샵</span>
-                </div>
-                
-                <h1 class="text-responsive-xl font-bold mb-6 leading-tight">
-                    The Knowledge ARC:<br>
-                    <span class="text-amber-300">AI-Powered Knowledge Mastery</span>
-                </h1>
-                
-                <p class="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed">
-                    읽고, 연결하고, 생산하는<br class="md:hidden">
-                    모든 지식 활동의 허들을 AI로 허물어 드립니다
-                </p>
-                
-                <!-- 웨비나 일정 정보 -->
-                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-6 max-w-lg mx-auto">
-                    <div class="text-amber-300 font-bold text-lg mb-3">📅 웨비나 일정</div>
-                    <div class="space-y-2 text-white/90">
-                        <div class="text-2xl font-bold">2025년 9월 7일 (일)</div>
-                        <div class="text-xl">오후 8:00 - 9:30</div>
-                        <div class="text-lg text-white/80">온라인 웨비나 (Zoom)</div>
-                    </div>
-                </div>
-                
-                <!-- 카운트다운 타이머 -->
-                <div class="countdown-timer rounded-xl p-6 mb-8 max-w-md mx-auto">
-                    <div class="text-lg font-semibold mb-2">웨비나 시작까지</div>
-                    <div id="countdown" class="text-3xl font-bold">
-                        <!-- JavaScript로 동적 업데이트 -->
-                    </div>
-                </div>
-                
-                <!-- CTA 버튼들 -->
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <a href="#register" class="bg-white text-blue-600 hover:bg-blue-50 px-8 py-4 rounded-xl font-semibold text-lg transition-all hover:scale-105 shadow-lg">
-                        🎟️ 무료 등록하기
-                    </a>
-                    <a href="#contents" class="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-xl font-semibold text-lg transition-all">
-                        📋 자세히 보기
-                    </a>
-                </div>
-                
-                <!-- 참여 현황 -->
-                <div class="mt-12 flex items-center justify-center space-x-8 text-white/80">
-                    <div class="text-center">
-                        <div class="text-2xl font-bold" id="registrations">00</div>
-                        <div class="text-sm">현재 등록자</div>
-                    </div>
-                    <div class="w-px h-8 bg-white/30"></div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold">90분</div>
-                        <div class="text-sm">집중 워크샵</div>
-                    </div>
-                    <div class="w-px h-8 bg-white/30"></div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold">무료</div>
-                        <div class="text-sm">참가비</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 문제 인식 섹션 -->
-    <section id="about" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-responsive-lg font-bold mb-6">
-                    혹시, 이런 고민을 하고 계신가요?
-                </h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    정말 잘 찾아오셨습니다!
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8 mb-16">
-                <!-- 문제 1 -->
-                <div class="hover-lift bg-gradient-to-br from-red-50 to-red-100 p-8 rounded-2xl border border-red-200">
-                    <div class="text-4xl mb-4">📚</div>
-                    <h3 class="text-xl font-bold mb-4 text-red-800">독서 후 핵심이 남지 않는다</h3>
-                    <p class="text-gray-700">
-                        책은 읽지만 정작 내 것이 되지 않고, 시간이 지나면 잊어버리는 경험
-                    </p>
-                </div>
-                
-                <!-- 문제 2 -->
-                <div class="hover-lift bg-gradient-to-br from-yellow-50 to-yellow-100 p-8 rounded-2xl border border-yellow-200">
-                    <div class="text-4xl mb-4">🧩</div>
-                    <h3 class="text-xl font-bold mb-4 text-yellow-800">메모들이 따로 논다</h3>
-                    <p class="text-gray-700">
-                        지식 연결이 실패하는 5가지 패턴, 흩어진 메모들이 아이디어로 발전되지 않음
-                    </p>
-                </div>
-                
-                <!-- 문제 3 -->
-                <div class="hover-lift bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl border border-blue-200">
-                    <div class="text-4xl mb-4">✍️</div>
-                    <h3 class="text-xl font-bold mb-4 text-blue-800">글쓰기 시작점에서 막힌다</h3>
-                    <p class="text-gray-700">
-                        빈 페이지 공포, 콘텐츠 제작이나 업무 문서 작성에서 자주 막히는 경험
-                    </p>
-                </div>
-            </div>
-            
-            <!-- 추가 문제들 -->
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="hover-lift bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl border border-purple-200">
-                    <div class="text-4xl mb-4">🤖</div>
-                    <h3 class="text-xl font-bold mb-4 text-purple-800">AI 활용의 한계</h3>
-                    <p class="text-gray-700">
-                        ChatGPT, Claude 등은 써봤지만 실질적인 업무나 학습에 제대로 통합하지 못함
-                    </p>
-                </div>
-                
-                <div class="hover-lift bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl border border-green-200">
-                    <div class="text-4xl mb-4">⚡</div>
-                    <h3 class="text-xl font-bold mb-4 text-green-800">지속성 부족</h3>
-                    <p class="text-gray-700">
-                        시스템을 만들어도 꾸준히 유지하기 어렵고, 결국 원점으로 돌아가는 반복
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 솔루션 섹션 -->
-    <section class="py-20 bg-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-responsive-lg font-bold mb-6">
-                    흩어진 지식 조각들,<br>
-                    언제까지 방치하실 건가요?
-                </h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Knowledge ARC 시스템으로 3대 허들을 한 번에 해결하세요
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8 mb-16">
-                <!-- ARC 1: 읽기 -->
-                <div class="hover-lift bg-white p-8 rounded-2xl shadow-lg">
-                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                        <div class="text-2xl">📖</div>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4 text-center text-gray-900">AI Reading Partner</h3>
-                    <p class="text-gray-600 text-center mb-4">
-                        핵심-근거-인용 3분 자동 추출
-                    </p>
-                    <ul class="text-sm text-gray-500 space-y-2">
-                        <li>• 종이책도 디지털로 변환</li>
-                        <li>• 비판적 재구성으로 주체성 유지</li>
-                        <li>• 나만의 필터링 시스템</li>
-                    </ul>
-                </div>
-                
-                <!-- ARC 2: 연결 -->
-                <div class="hover-lift bg-white p-8 rounded-2xl shadow-lg">
-                    <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                        <div class="text-2xl">🔗</div>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4 text-center text-gray-900">지식 연결 자동화</h3>
-                    <p class="text-gray-600 text-center mb-4">
-                        흩어진 메모를 연결하는 AI 질문법
-                    </p>
-                    <ul class="text-sm text-gray-500 space-y-2">
-                        <li>• 연결 패턴 발견</li>
-                        <li>• 원자 메모 생성</li>
-                        <li>• 링크 생성과 의미 부여</li>
-                    </ul>
-                </div>
-                
-                <!-- ARC 3: 생산 -->
-                <div class="hover-lift bg-white p-8 rounded-2xl shadow-lg">
-                    <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                        <div class="text-2xl">✨</div>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4 text-center text-gray-900">콘텐츠 자동 생성</h3>
-                    <p class="text-gray-600 text-center mb-4">
-                        원자에서 아웃라인까지 5구획 시스템
-                    </p>
-                    <ul class="text-sm text-gray-500 space-y-2">
-                        <li>• 논리적 개요 자동 제안</li>
-                        <li>• 다양한 포맷 변환 (OSMU)</li>
-                        <li>• 나의 목소리 유지</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- YouTube 영상 임베드 -->
-            <div class="mb-12">
-                <div class="bg-white rounded-2xl p-6 shadow-lg">
-                    <h3 class="text-xl font-bold text-center mb-6 text-gray-900">🎬 미리보기 - 지식관리도 바이브하게</h3>
-                    <div class="relative" style="padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe 
-                            src="https://www.youtube.com/embed/TpTWbNTw32c?autoplay=1&mute=1&rel=0&modestbranding=1&loop=1&playlist=TpTWbNTw32c" 
-                            title="Knowledge ARC 시스템 미리보기" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            allowfullscreen
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;">
-                        </iframe>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 차별화 포인트 -->
-            <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg">
-                <h3 class="text-2xl font-bold text-center mb-8 text-gray-900">왜 Knowledge ARC인가?</h3>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h4 class="text-lg font-bold mb-4 text-blue-600">🤝 AI 파트너 시스템</h4>
-                        <p class="text-gray-600">
-                            단순 도구 활용을 넘어선 진정한 파트너 관계. AI가 제안하고, 당신이 최종 결정하는 <strong>지식 관리 주권</strong> 유지
-                        </p>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-bold mb-4 text-green-600">⚡ 즉시 적용 가능</h4>
-                        <p class="text-gray-600">
-                            이론보다 실전! 웨비나 당일부터 활용할 수 있는 구체적 워크플로우와 템플릿 제공
-                        </p>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-bold mb-4 text-purple-600">💻 코딩 없는 전문가 수준</h4>
-                        <p class="text-gray-600">
-                            CLI 기반이지만 비개발자도 30분 안에 구축 가능한 로컬 지식베이스와 AI 연동 시스템
-                        </p>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-bold mb-4 text-red-600">🎯 3배 생산성 향상</h4>
-                        <p class="text-gray-600">
-                            콘텐츠 제작 속도 3배, 학습 효율 3배 향상을 통한 확실한 투자 대비 효과 (ROI)
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 웨비나 주요 내용 -->
-    <section id="contents" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-responsive-lg font-bold mb-6">
-                    웨비나 주요 내용
-                </h2>
-                <p class="text-xl text-gray-600">
-                    90분 동안 당신이 얻어갈 핵심 가치들
-                </p>
-            </div>
-            
-            <!-- 웨비나 세션 아젠다 -->
-            <div class="max-w-4xl mx-auto">
-                <div class="space-y-8">
-                    <!-- 세션 1 -->
-                    <div class="flex items-start space-x-6 bg-white p-6 rounded-2xl shadow-lg hover-lift">
-                        <div class="flex-shrink-0 w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center">
-                            <span class="text-blue-600 font-bold text-xl">1</span>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="text-2xl font-bold mb-3">💡 왜 지금, 개인지식관리인가?</h3>
-                            <p class="text-gray-600 text-lg leading-relaxed">
-                                현대 사회에서 생산성을 좌우하는 개인지식관리의 핵심 이유를 명확하게 분석해 드립니다.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- 세션 2 -->
-                    <div class="flex items-start space-x-6 bg-white p-6 rounded-2xl shadow-lg hover-lift">
-                        <div class="flex-shrink-0 w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
-                            <span class="text-green-600 font-bold text-xl">2</span>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="text-2xl font-bold mb-3">🛠️ 결과를 만드는 지식 관리 전략: 제텔카스텐 & 옵시디언</h3>
-                            <p class="text-gray-600 text-lg leading-relaxed">
-                                제텔카스텐과 옵시디언의 핵심 원리부터 실제 적용 사례까지, 지식 시스템이 가야 할 방향을 제시합니다.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- 세션 3 -->
-                    <div class="flex items-start space-x-6 bg-white p-6 rounded-2xl shadow-lg hover-lift">
-                        <div class="flex-shrink-0 w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center">
-                            <span class="text-purple-600 font-bold text-xl">3</span>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="text-2xl font-bold mb-3">🚀 AI를 통한 개인지식관리 부스팅 전략</h3>
-                            <p class="text-gray-600 text-lg leading-relaxed">
-                                생성형 AI 활용을 통해 개인지식관리에 날개를 다는 활용 방안 및 서비스에 대해 다룹니다.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- 세션 4 -->
-                    <div class="flex items-start space-x-6 bg-white p-6 rounded-2xl shadow-lg hover-lift">
-                        <div class="flex-shrink-0 w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center">
-                            <span class="text-yellow-600 font-bold text-xl">4</span>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="text-2xl font-bold mb-3">✨ 잠재된 창의성을 깨우는 지식 연결의 힘</h3>
-                            <p class="text-gray-600 text-lg leading-relaxed">
-                                지식을 연결하고 융합하여 새로운 아이디어를 생성하고 문제를 해결하는 지식 연결의 힘을 보여드립니다.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 기대 효과 -->
-    <section class="py-20 bg-gray-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-responsive-lg font-bold mb-6">
-                    웨비나가 당신에게 줄<br>
-                    <span class="text-amber-400">3가지 결정적 변화</span>
-                </h2>
-            </div>
-            
-            <div class="grid lg:grid-cols-3 gap-8">
-                <!-- 변화 1 -->
-                <div class="bg-gray-800 p-8 rounded-2xl hover-lift">
-                    <div class="text-4xl mb-6 text-center">🚀</div>
-                    <h3 class="text-xl font-bold mb-4 text-center text-amber-400">생산성의 혁신</h3>
-                    <div class="space-y-4 text-gray-300">
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">콘텐츠 제작 속도 3배 향상</div>
-                            <p class="text-sm">1시간 안에 블로그 글, 유튜브 스크립트 초안 완성</p>
-                        </div>
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">학습 효율 3배 증가</div>
-                            <p class="text-sm">물리적 독서량 대비 지식 체화율 획기적 개선</p>
-                        </div>
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">나만의 AI 업무 비서</div>
-                            <p class="text-sm">CLI로 로컬 자료 학습한 AI에게 즉시 질문하고 답 획득</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 변화 2 -->
-                <div class="bg-gray-800 p-8 rounded-2xl hover-lift">
-                    <div class="text-4xl mb-6 text-center">🧠</div>
-                    <h3 class="text-xl font-bold mb-4 text-center text-amber-400">지적 성장</h3>
-                    <div class="space-y-4 text-gray-300">
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">비판적 AI 활용 능력</div>
-                            <p class="text-sm">AI 제안을 맹목적 수용이 아닌 주체적 재구성 역량</p>
-                        </div>
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">지속 가능한 지식 활동</div>
-                            <p class="text-sm">일관성 있는 지식 축적과 활용 루틴 체화</p>
-                        </div>
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">전문성 심화와 확장</div>
-                            <p class="text-sm">기존 전문성 뿌리 내리며 새 분야 진입 장벽 대폭 완화</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 변화 3 -->
-                <div class="bg-gray-800 p-8 rounded-2xl hover-lift">
-                    <div class="text-4xl mb-6 text-center">💎</div>
-                    <h3 class="text-xl font-bold mb-4 text-center text-amber-400">가치 창출</h3>
-                    <div class="space-y-4 text-gray-300">
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">생산자 마인드셋</div>
-                            <p class="text-sm">꾸준한 콘텐츠 발행으로 온라인 영향력 확보</p>
-                        </div>
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">개인 브랜딩 기반</div>
-                            <p class="text-sm">강의, 컨설팅, 사이드 프로젝트 등 새로운 수익 기회</p>
-                        </div>
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">자기 효능감 증진</div>
-                            <p class="text-sm">지식이 세상에 도움되는 결과물로 완성되는 성취감</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 강연자 소개 -->
-    <section id="speaker" class="py-20 bg-gradient-to-br from-blue-50 to-blue-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-responsive-lg font-bold mb-6 text-blue-900">강연자 소개</h2>
-                <p class="text-xl text-blue-700 max-w-3xl mx-auto">
-                    15년 이상 지식관리 노하우를 전달하는 전문가
-                </p>
-            </div>
-            
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-lg border border-white/50">
-                    <div class="md:flex items-center space-y-8 md:space-y-0 md:space-x-12">
-                        <!-- 프로필 이미지 -->
-                        <div class="flex-shrink-0 text-center">
-                            <div class="w-32 h-32 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl text-white font-bold" style="background-color: #8E99A2;">
-                                생산성
-                            </div>
-                            <h3 class="text-2xl font-bold text-blue-900">생산적생산자</h3>
-                            <p class="text-blue-700 font-medium">개인지식관리 전문가</p>
-                        </div>
-                        
-                        <!-- 소개 내용 -->
-                        <div class="flex-1">
-                            <div class="mb-6">
-                                <p class="text-lg text-blue-800 mb-4 leading-relaxed">
-                                    <strong class="text-blue-900">14년차 직장인,</strong><br>
-                                    15년 이상 꾸준히 실천해온 메모와 지식관리 노하우를 바탕으로 
-                                    개인의 성장을 돕는 지식 생산 시스템을 연구하고 전달합니다.
-                                </p>
-                            </div>
-                            
-                            <!-- 주요 경력 -->
-                            <div class="space-y-3 mb-6">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-3 h-3 bg-gradient-to-r from-primary to-primary-light rounded-full"></div>
-                                    <span class="text-sm text-blue-800 font-medium">Zettelkasten & Obsidian 기반의 강의 및 1:1 코칭 80세션 이상 진행</span>
-                                </div>
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-3 h-3 bg-gradient-to-r from-primary to-primary-light rounded-full"></div>
-                                    <span class="text-sm text-blue-800 font-medium">출간 저서 (총 3권): 『거의 모든 것의 기록』(2019) 외</span>
-                                </div>
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-3 h-3 bg-gradient-to-r from-primary to-primary-light rounded-full"></div>
-                                    <span class="text-sm text-blue-800 font-medium">YouTube 채널 <생산적생산자> 운영 중 (구독자 약 3,000명)</span>
-                                </div>
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-3 h-3 bg-gradient-to-r from-primary to-primary-light rounded-full"></div>
-                                    <span class="text-sm text-blue-800 font-medium">주간 뉴스레터 발행 중 (구독자 약 800명)</span>
-                                </div>
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-3 h-3 bg-gradient-to-r from-primary to-primary-light rounded-full"></div>
-                                    <span class="text-sm text-blue-800 font-medium">Threads 팔로워 약 700명</span>
-                                </div>
-                            </div>
-                            
-                            <!-- 출간 도서 -->
-                            <div class="flex flex-wrap gap-4">
-                                <a href="https://www.yes24.com/product/goods/129855656" target="_blank" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-xl shadow-lg flex items-center space-x-3 hover:shadow-xl transition-all">
-                                    <div class="w-10 h-12 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
-                                        <span class="text-xs font-bold">📚</span>
-                                    </div>
-                                    <div>
-                                        <div class="font-bold text-sm">제텔카스텐 & 옵시디언</div>
-                                        <div class="text-xs text-blue-100">(2024)</div>
-                                    </div>
-                                </a>
-                                <a href="https://www.yes24.com/product/goods/68868271" target="_blank" class="bg-gradient-to-r from-amber-500 to-amber-600 text-white p-4 rounded-xl shadow-lg flex items-center space-x-3 hover:shadow-xl transition-all">
-                                    <div class="w-10 h-12 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
-                                        <span class="text-xs font-bold">📖</span>
-                                    </div>
-                                    <div>
-                                        <div class="font-bold text-sm">거의 모든 것의 기록</div>
-                                        <div class="text-xs text-amber-100">(2019)</div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 웨비나 일정 및 등록 -->
-    <section id="register" class="py-20 bg-gray-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-responsive-lg font-bold mb-6">
-                    웨비나 일정 및 등록<br>
-                    <span class="text-amber-400">더 이상 지식의 홍수에서 헤매지 마세요</span>
-                </h2>
-            </div>
-            
-            <div class="grid lg:grid-cols-2 gap-8 mb-16">
-                <!-- 웨비나 정보 카드 -->
-                <div class="bg-gray-800 p-8 rounded-2xl hover-lift">
-                    <div class="text-4xl mb-6 text-center">📅</div>
-                    <h3 class="text-xl font-bold mb-4 text-center text-amber-400">웨비나 일정</h3>
-                    <div class="space-y-4 text-gray-300">
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">날짜</div>
-                            <p class="text-sm">2025년 9월 7일 (일)</p>
-                        </div>
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">시간</div>
-                            <p class="text-sm">오후 8시 - 9시 반 (90분)</p>
-                        </div>
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">장소</div>
-                            <p class="text-sm">온라인 웨비나 (Zoom)</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 참가 혜택 카드 -->
-                <div class="bg-gray-800 p-8 rounded-2xl hover-lift">
-                    <div class="text-4xl mb-6 text-center">🎁</div>
-                    <h3 class="text-xl font-bold mb-4 text-center text-amber-400">참가 혜택</h3>
-                    <div class="space-y-4 text-gray-300">
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">참가비</div>
-                            <p class="text-sm">완전 무료</p>
-                        </div>
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">녹화본 제공</div>
-                            <p class="text-sm">7일간 무제한 시청</p>
-                        </div>
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="font-semibold text-white mb-2">특별 혜택</div>
-                            <p class="text-sm">AI-PKM 스타터 키트 무료 제공</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                    
-            <!-- 등록 폼 -->
-            <div class="max-w-4xl mx-auto">
-                <div id="register-form" class="bg-white rounded-2xl p-8 shadow-xl">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">
-                        🚀 지금 바로 등록하세요!
-                    </h3>
-                        
-                        <!-- Tally Form Embed -->
-                        <div id="tally-form-container" class="min-h-[600px]">
-                            <iframe 
-                                src="https://tally.so/embed/3yap68?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
-                                width="100%" 
-                                height="600" 
-                                frameborder="0" 
-                                marginheight="0" 
-                                marginwidth="0" 
-                                title="The Knowledge ARC 웨비나 등록"
-                                loading="lazy"
-                                style="border: none; background: transparent;">
-                            </iframe>
-                        </div>
-                        
-                    <div class="mt-6 text-center">
-                        <p class="text-sm text-gray-500">
-                            등록 후 웨비나 링크와 자료를 이메일로 발송해드립니다.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-responsive-lg font-bold mb-6">자주 묻는 질문</h2>
-            </div>
-            
-            <div class="space-y-6">
-                <!-- FAQ 1 -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                    <details class="group">
-                        <summary class="flex justify-between items-center cursor-pointer">
-                            <h3 class="text-lg font-semibold">이미 제텔카스텐, 옵시디언을 사용하고 있는데 웨비나가 도움이 될까요?</h3>
-                            <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </summary>
-                        <div class="mt-4 text-gray-600">
-                            <p>네, 오히려 더 큰 도움이 될 것입니다. 이 웨비나는 도구 사용법이 아닌 <strong>'왜'와 '원리'</strong>에 집중합니다. 기존 시스템을 AI와 융합해 생산성을 3배 향상시키는 전략적 방향성을 제시합니다.</p>
-                        </div>
-                    </details>
-                </div>
-                
-                <!-- FAQ 2 -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                    <details class="group">
-                        <summary class="flex justify-between items-center cursor-pointer">
-                            <h3 class="text-lg font-semibold">기존 지식관리 시스템이 있는데 어떤 도움을 받을 수 있나요?</h3>
-                            <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </summary>
-                        <div class="mt-4 text-gray-600">
-                            <p>기존 시스템을 <strong>통합하고 최적화하는 전략적 워크플로우</strong>를 제시합니다. 흩어진 지식 조각들을 연결해 실제 결과물로 만드는 지속 가능한 시스템 설계 방법을 배우실 수 있습니다.</p>
-                        </div>
-                    </details>
-                </div>
-                
-                <!-- FAQ 3 -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                    <details class="group">
-                        <summary class="flex justify-between items-center cursor-pointer">
-                            <h3 class="text-lg font-semibold">개인별 맞춤 솔루션도 받을 수 있나요?</h3>
-                            <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </summary>
-                        <div class="mt-4 text-gray-600">
-                            <p>웨비나에서는 <strong>성공하는 시스템의 공통 원리</strong>를 제시하고, 개별 맞춤화는 웨비나 후 별도 전략 상담에서 진행됩니다. 90분 동안은 모든 참가자가 적용할 수 있는 핵심 프레임워크에 집중합니다.</p>
-                        </div>
-                    </details>
-                </div>
-                
-                <!-- FAQ 4 -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                    <details class="group">
-                        <summary class="flex justify-between items-center cursor-pointer">
-                            <h3 class="text-lg font-semibold">지식관리가 처음인 초보자도 따라갈 수 있나요?</h3>
-                            <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </summary>
-                        <div class="mt-4 text-gray-600">
-                            <p><strong>절대 초보자도 환영합니다!</strong> 웨비나는 기초 개념부터 시작해서 단계별로 진행됩니다. 복잡한 이론 대신 <strong>실제 사례와 즉시 적용 가능한 방법</strong>을 중심으로 설명하며, 실시간 Q&A로 궁금한 점을 바로 해결할 수 있습니다.</p><p class="mt-3 text-sm bg-blue-50 p-3 rounded-lg"><strong>💡 초보자 특별 혜택:</strong> 웨비나 후 '초보자를 위한 첫 걸음 가이드'를 별도로 제공해드립니다.</p>
-                        </div>
-                    </details>
-                </div>
-                
-                <!-- FAQ 5 -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                    <details class="group">
-                        <summary class="flex justify-between items-center cursor-pointer">
-                            <h3 class="text-lg font-semibold">실시간 참석이 어려운데 녹화본으로도 충분히 도움받을 수 있나요?</h3>
-                            <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </summary>
-                        <div class="mt-4 text-gray-600">
-                            <p><strong>네, 녹화본만으로도 충분합니다!</strong> 등록자 모든 분께 <strong>7일간 무제한 시청</strong> 가능한 고품질 녹화본을 제공합니다.</p><div class="mt-4 space-y-2 text-sm"><div class="flex items-center space-x-2"><span class="text-green-600">✓</span><span>배속 조절로 본인 학습 속도에 맞춰 시청</span></div><div class="flex items-center space-x-2"><span class="text-green-600">✓</span><span>중요한 부분 반복 학습 가능</span></div><div class="flex items-center space-x-2"><span class="text-green-600">✓</span><span>실시간 참석자와 동일한 모든 자료 제공</span></div><div class="flex items-center space-x-2"><span class="text-green-600">✓</span><span>웨비나 중 나온 Q&A도 모두 포함</span></div></div><p class="mt-3 text-sm bg-amber-50 p-3 rounded-lg"><strong>💡 추천:</strong> 가능하면 실시간 참석을 권합니다. 개별 질문에 대한 즉석 답변과 참가자들 간의 에너지를 직접 경험할 수 있습니다.</p>
-                        </div>
-                    </details>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 사회적 증거 (후기) -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-responsive-lg font-bold mb-6">참가자 후기</h2>
-                <p class="text-xl text-gray-600">
-                    실제로 변화를 경험한 분들의 생생한 이야기
-                </p>
-            </div>
-            
-            <div class="grid lg:grid-cols-3 gap-8">
-                <!-- 후기 1 -->
-                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl hover-lift">
-                    <div class="flex items-center mb-4">
-                        <div class="flex text-yellow-400">
-                            ⭐⭐⭐⭐⭐
-                        </div>
-                    </div>
-                    <p class="text-gray-700 mb-6 italic">
-                        "AI와 제텔카스텐을 결합한 방법이 정말 혁신적이었습니다. 이전에는 메모만 쌓아두고 활용하지 못했는데, 이제는 메모들이 자연스럽게 연결되면서 새로운 아이디어가 계속 나와요."
-                    </p>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center mr-3">
-                            <span class="text-sm font-bold">김</span>
-                        </div>
-                        <div>
-                            <div class="font-semibold">김○○</div>
-                            <div class="text-sm text-gray-500">마케팅 기획자</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 후기 2 -->
-                <div class="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl hover-lift">
-                    <div class="flex items-center mb-4">
-                        <div class="flex text-yellow-400">
-                            ⭐⭐⭐⭐⭐
-                        </div>
-                    </div>
-                    <p class="text-gray-700 mb-6 italic">
-                        "CLI를 통한 AI 활용법이 처음엔 어려워 보였는데, 실제로 따라해보니 생각보다 간단하더라구요. 이제 내 메모 폴더가 진짜 AI 비서 역할을 해주고 있어요. 업무 효율이 확실히 달라졌습니다."
-                    </p>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-green-200 rounded-full flex items-center justify-center mr-3">
-                            <span class="text-sm font-bold">박</span>
-                        </div>
-                        <div>
-                            <div class="font-semibold">박○○</div>
-                            <div class="text-sm text-gray-500">개발자</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 후기 3 -->
-                <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl hover-lift">
-                    <div class="flex items-center mb-4">
-                        <div class="flex text-yellow-400">
-                            ⭐⭐⭐⭐⭐
-                        </div>
-                    </div>
-                    <p class="text-gray-700 mb-6 italic">
-                        "논문 쓸 때 참고문헌 관리가 항상 골치였는데, 이 시스템 적용하고 나서는 정말 편해졌어요. AI가 자동으로 정리해주는 기능들이 특히 유용하고, 아이디어 연결도 훨씬 수월해졌습니다."
-                    </p>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-purple-200 rounded-full flex items-center justify-center mr-3">
-                            <span class="text-sm font-bold">이</span>
-                        </div>
-                        <div>
-                            <div class="font-semibold">이○○</div>
-                            <div class="text-sm text-gray-500">대학원생</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 마지막 CTA -->
-    <section class="py-20 bg-gray-900 text-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="mb-8">
-                <h2 class="text-responsive-lg font-bold mb-6">
-                    더 이상 지식의 홍수에서 헤매지 마세요.
-                </h2>
-                <p class="text-xl text-gray-300 mb-8">
-                    90분간 진행되는 웨비나는 소셜 미디어에서 찾기 힘든 진짜 개인지식관리 노하우를 전달합니다.
-                </p>
-                <p class="text-lg text-gray-400">
-                    잘못된 오해는 바로잡고, 당신의 생산성을 극대화할 명확한 가이드라인을 직접 확인하세요.
-                </p>
-            </div>
-            
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-8">
-                <div class="grid md:grid-cols-3 gap-6 text-center">
-                    <div>
-                        <div class="text-3xl font-bold text-amber-400">90분</div>
-                        <div class="text-sm text-gray-300">집중 워크샵</div>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-bold text-amber-400">무료</div>
-                        <div class="text-sm text-gray-300">참가비</div>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-bold text-amber-400" id="final-countdown">00</div>
-                        <div class="text-sm text-gray-300">현재 등록자</div>
-                    </div>
-                </div>
-            </div>
-            
-            <a href="#register" class="inline-block bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900 font-bold py-4 px-12 rounded-2xl hover:opacity-90 transition-all transform hover:scale-105 text-xl">
-                🎟️ 지금 바로 무료 등록하기
-            </a>
-            
-            <p class="text-sm text-gray-400 mt-4">
-                * 등록 후 웨비나 링크와 사전 자료를 이메일로 발송합니다
-            </p>
-        </div>
-    </section>
-
-    <!-- 푸터 -->
-    <footer class="bg-black text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-3 gap-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <div class="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center text-white font-bold">
+    <!-- 메인 콘텐츠 -->
+    <main class="pt-16">
+        <!-- Hero 섹션 -->
+        <section class="hero-gradient py-20 min-h-screen flex items-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+                <div class="max-w-4xl mx-auto">
+                    <!-- 로고 -->
+                    <div class="mb-8">
+                        <div class="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-4xl font-bold mx-auto mb-4">
                             K
                         </div>
-                        <span class="font-bold">Knowledge ARC</span>
                     </div>
-                    <p class="text-gray-400 text-sm">
-                        AI-Powered Knowledge Mastery<br>
-                        읽고, 연결하고, 생산하는 모든 지식 활동의 허들을 AI로 허물어드립니다.
+                    
+                    <h1 class="text-responsive-xl font-bold mb-6 leading-tight">
+                        The Knowledge ARC:<br>
+                        <span class="text-amber-300">AI-Powered Knowledge Mastery</span>
+                    </h1>
+                    
+                    <p class="text-xl md:text-2xl mb-12 text-white/90 leading-relaxed">
+                        읽고, 연결하고, 생산하는<br class="md:hidden">
+                        모든 지식 활동의 허들을 AI로 허물어 드립니다
                     </p>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold mb-4">빠른 링크</h4>
-                    <div class="space-y-2 text-sm text-gray-400">
-                        <a href="#about" class="hover:text-white transition-colors">웨비나 소개</a><br>
-                        <a href="#contents" class="hover:text-white transition-colors">주요 내용</a><br>
-                        <a href="#speaker" class="hover:text-white transition-colors">강연자 소개</a><br>
-                        <a href="#register" class="hover:text-white transition-colors">등록하기</a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold mb-4">문의</h4>
-                    <div class="text-sm text-gray-400">
-                        <p>웨비나 관련 문의사항이 있으시면</p>
-                        <p>이메일로 연락주세요.</p>
-                        <a href="mailto:contact@knowledge-arc.com" class="text-amber-400 hover:text-amber-300 transition-colors">
-                            contact@knowledge-arc.com
+                    
+                    <!-- 주요 액션 버튼들 -->
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-2xl mx-auto">
+                        <!-- 다시보기 버튼 (메인) -->
+                        <a href="./replay.html" 
+                           class="btn-accent text-white px-8 py-4 rounded-xl text-lg font-semibold inline-flex items-center space-x-3 hover-lift w-full sm:w-auto justify-center">
+                            <span class="text-2xl">🎬</span>
+                            <span>웨비나 다시보기</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.5a1.5 1.5 0 011.5 1.5v1.5M15 10h-1.5a1.5 1.5 0 00-1.5 1.5v1.5m2.25 5.25v-5.25a1.5 1.5 0 011.5-1.5h1.5"></path>
+                            </svg>
                         </a>
+                        
+                        <!-- 토글 버튼 -->
+                        <button onclick="toggleWebinarSection()" 
+                                class="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-xl text-lg font-medium inline-flex items-center space-x-2 hover:bg-white/30 transition-all w-full sm:w-auto justify-center">
+                            <span>📚</span>
+                            <span>웨비나 등록 페이지</span>
+                            <svg id="toggle-icon" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- 간단한 설명 -->
+                    <div class="mt-16 bg-white/10 backdrop-blur-sm rounded-xl p-6 max-w-lg mx-auto">
+                        <p class="text-white/90 text-lg">
+                            <span class="font-bold text-amber-300">🎯 웨비나 다시보기</span>가 메인입니다.<br>
+                            웨비나 등록 페이지는 향후 활용을 위해 보관 중입니다.
+                        </p>
                     </div>
                 </div>
             </div>
-            
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-                <p>&copy; 2025 Knowledge ARC. All rights reserved.</p>
+        </section>
+
+        <!-- 토글되는 웨비나 등록 섹션 -->
+        <section id="webinar-section" class="toggle-content bg-white py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
+                    <h2 class="text-3xl font-bold mb-6 text-gray-900">웨비나 등록 페이지</h2>
+                    <p class="text-xl text-gray-600 mb-8">
+                        향후 다음 웨비나를 위해 보관 중인 페이지입니다
+                    </p>
+                    <a href="./webinar.html" 
+                       class="btn-primary text-white px-8 py-4 rounded-xl text-lg font-semibold inline-flex items-center space-x-2 hover-lift">
+                        <span>📋</span>
+                        <span>웨비나 등록 페이지 보기</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 추가 정보 섹션 -->
+        <section class="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
+                    개인별 맞춤 전략 상담
+                </h2>
+                <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+                    웨비나를 시청하신 후, 개인별 맞춤 상담을 통해<br>
+                    여러분만의 AI 지식관리 시스템을 구축해보세요
+                </p>
+                
+                <a href="https://tally.so/r/wbYBWZ" 
+                   target="_blank"
+                   class="btn-accent text-white px-8 py-4 rounded-xl text-lg font-semibold inline-flex items-center space-x-2 hover-lift">
+                    <span>🚀</span>
+                    <span>전략상담 신청하기</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex items-center justify-center space-x-2 mb-4">
+                <div class="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center text-white font-bold">
+                    K
+                </div>
+                <span class="font-bold text-xl">Knowledge ARC</span>
+            </div>
+            <p class="text-gray-400 mb-4">AI-Powered Knowledge Mastery</p>
+            <div class="text-sm text-gray-500">
+                © 2025 Knowledge ARC. All rights reserved.
             </div>
         </div>
     </footer>
@@ -968,126 +256,27 @@
 
     <!-- JavaScript -->
     <script>
-        // 카운트다운 타이머
-        function updateCountdown() {
-            const webinarDate = new Date('2025-09-07T20:00:00+09:00').getTime();
-            const now = new Date().getTime();
-            const distance = webinarDate - now;
-
-            if (distance > 0) {
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                
-                document.getElementById('countdown').innerHTML = `${days}일 ${hours}시간 ${minutes}분 ${seconds}초`;
-            } else {
-                document.getElementById('countdown').innerHTML = "웨비나 진행 중";
-            }
-        }
-
-        // 1초마다 업데이트
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-
-        // 등록자 수 애니메이션
-        function animateCounter(elementId, target) {
-            const element = document.getElementById(elementId);
-            let current = 0;
-            const increment = target / 100;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    element.textContent = target;
-                    clearInterval(timer);
-                } else {
-                    element.textContent = Math.ceil(current);
-                }
-            }, 30);
-        }
-
-        // 페이지 로드시 애니메이션 시작
-        window.addEventListener('load', async () => {
-            const currentCount = await fetchActualRegistrationCount();
-            animateCounter('registrations', currentCount);
-            animateCounter('final-countdown', currentCount);
+        // 토글 기능
+        function toggleWebinarSection() {
+            const section = document.getElementById('webinar-section');
+            const icon = document.getElementById('toggle-icon');
             
-            // 5분마다 등록자 수 업데이트
-            setInterval(async () => {
-                const newCount = await fetchActualRegistrationCount();
-                document.getElementById('registrations').textContent = newCount;
-                document.getElementById('final-countdown').textContent = newCount;
-            }, 5 * 60 * 1000); // 5분 = 5 * 60 * 1000 ms
+            section.classList.toggle('active');
+            icon.style.transform = section.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // 모바일 메뉴 토글
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
         });
 
-        // 스무스 스크롤
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+        // 외부 링크 처리
+        document.addEventListener('DOMContentLoaded', function() {
+            const externalLinks = document.querySelectorAll('a[target="_blank"]');
+            externalLinks.forEach(link => {
+                link.rel = 'noopener noreferrer';
             });
-        });
-
-        // 실시간 등록자 수 업데이트
-        function updateRegistrationCount() {
-            // 실제 서비스에서는 API에서 데이터를 가져옵니다
-            // 현재는 로컬스토리지를 사용한 시뮬레이션
-            
-            let currentCount = localStorage.getItem('webinar-registrations');
-            if (!currentCount) {
-                // 초기값 설정 (수동으로 00 설정)
-                currentCount = 0; // 00명으로 시작
-                localStorage.setItem('webinar-registrations', currentCount);
-            } else {
-                currentCount = parseInt(currentCount);
-            }
-            
-            // 000명 고정으로 유지
-            // currentCount는 변경하지 않음
-            
-            localStorage.setItem('webinar-registrations', currentCount);
-            return currentCount;
-        }
-        
-        // 실제 API 호출 함수 (주석 처리된 실제 구현 예시)
-        async function fetchActualRegistrationCount() {
-            try {
-                // const response = await fetch('/api/webinar/registrations');
-                // const data = await response.json();
-                // return data.count;
-                
-                // Tally API를 사용하는 경우 (API 키 필요)
-                // const response = await fetch('https://api.tally.so/forms/3yap68/responses', {
-                //     headers: {
-                //         'Authorization': 'Bearer YOUR_API_KEY'
-                //     }
-                // });
-                // const data = await response.json();
-                // return data.length;
-                
-                return updateRegistrationCount(); // 현재는 로컬 시뮬레이션 사용
-            } catch (error) {
-                console.error('등록자 수 조회 실패:', error);
-                return updateRegistrationCount(); // 실패 시 로컬 시뮬레이션 사용
-            }
-        }
-
-        // 스크롤에 따른 네비게이션 배경 변화
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.classList.add('bg-white/95');
-                nav.classList.remove('bg-white/90');
-            } else {
-                nav.classList.add('bg-white/90');
-                nav.classList.remove('bg-white/95');
-            }
         });
     </script>
 
