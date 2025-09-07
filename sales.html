@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Knowledge ARC: AI-Powered Knowledge Mastery | 세일즈 페이지</title>
+  <meta name="description" content="AI와 함께하는 8주 AI-PKM 코칭. 모든 신청은 1:1 전략상담을 통해 진행됩니다. 얼리버드 혜택은 1주 내 상담 예약 시 적용." />
+
+  <!-- PWA -->
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="theme-color" content="#2563EB" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="apple-touch-icon" href="./icons/icon-192x192.png" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --primary: #2563EB;
+      --primary-dark: #1D4ED8;
+      --accent: #F59E0B;
+      --success: #10B981;
+    }
+    html { scroll-behavior: smooth; }
+    .hero-gradient { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); }
+    .btn-primary { background-color: var(--primary); color: #fff; transition: all .2s ease; }
+    .btn-primary:hover { background-color: #1D4ED8; transform: translateY(-1px); }
+    .btn-accent { background-color: var(--accent); color: #111827; transition: all .2s ease; }
+    .btn-accent:hover { background-color: #D97706; transform: translateY(-1px); }
+    .hover-lift { transition: transform .3s ease, box-shadow .3s ease; }
+    .hover-lift:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,0,0,.08); }
+    .text-responsive-xl { font-size: clamp(2rem, 5vw, 4rem); }
+    .text-responsive-lg { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+    /* Responsive iframe wrapper */
+    .ratio-16x9 { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+    .ratio-16x9 > iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 12px; }
+    /* Sticky footer CTA */
+    .sticky-cta { position: sticky; bottom: 0; z-index: 40; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-16 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-amber-500 rounded-lg text-white font-bold flex items-center justify-center">K</div>
+          <span class="font-bold">Knowledge ARC</span>
+        </div>
+        <div class="hidden md:flex items-center space-x-6">
+          <a href="#about" class="text-gray-600 hover:text-gray-900">소개</a>
+          <a href="#program" class="text-gray-600 hover:text-gray-900">프로그램</a>
+          <a href="#offerings" class="text-gray-600 hover:text-gray-900">코칭/가격</a>
+          <a href="#faq" class="text-gray-600 hover:text-gray-900">FAQ</a>
+          <span class="hidden lg:inline-flex items-center text-xs font-semibold bg-amber-100 text-amber-800 px-2 py-1 rounded" id="navDday"></span>
+          <a href="#consult" class="btn-primary px-5 py-2 rounded-lg">1:1 전략상담</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header id="top" class="hero-gradient pt-24 pb-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+      <div class="inline-flex items-center bg-white/20 backdrop-blur rounded-full px-5 py-2 mb-6">
+        <span class="text-sm font-medium">8주 AI-PKM 코칭</span>
+        <span class="mx-2">•</span>
+        <span class="text-sm">AI 파트너 시스템 구축</span>
+      </div>
+      <h1 class="text-responsive-xl font-bold leading-tight mb-4">
+        AI로 지식 관리 허들 허물기<br>
+        <span class="text-amber-300">The Knowledge ARC 2.0</span>
+      </h1>
+      <p class="text-lg md:text-xl text-white/90 max-w-3xl mx-auto mb-8">
+        모든 신청은 <span class="font-semibold">1:1 전략상담</span>을 통해 진행됩니다.<br>
+        상담 후 적합 시 결제 가능합니다.
+      </p>
+      <div class="bg-white/10 max-w-2xl mx-auto rounded-xl p-5 mb-4">
+        <p class="text-white text-sm md:text-base">
+          💡 <span class="font-semibold">얼리버드 혜택</span>: <span class="underline">9월 14일 (일) 23:59까지</span><br>
+          1:1 전략상담을 예약하면 얼리 가격이 적용됩니다.
+        </p>
+      </div>
+      <!-- Early-bird countdown (highlighted) -->
+      <div class="max-w-md mx-auto bg-amber-100 border border-amber-200 rounded-xl p-4 mb-8 shadow">
+        <div class="text-sm text-amber-800 font-semibold mb-1">얼리버드 마감까지</div>
+        <div id="earlyCountdown" class="text-3xl font-extrabold text-amber-900 tracking-tight">--일 --:--:--</div>
+      </div>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#consult" class="btn-accent px-8 py-4 rounded-xl font-semibold text-lg">1:1 전략상담 예약하기</a>
+        <a href="#program" class="border-2 border-white/80 text-white hover:bg-white hover:text-blue-700 px-8 py-4 rounded-xl font-semibold text-lg">프로그램 소개</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 1) 문제 인식 카드 -->
+  <section id="section-1-problem" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-responsive-lg font-bold mb-2">문제 인식</h2>
+        <p class="text-gray-600">독서 휘발 · 메모 연결 부재 · 빈 페이지 공포</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="hover-lift bg-gradient-to-br from-red-50 to-red-100 p-8 rounded-2xl border border-red-200">
+          <div class="text-3xl mb-3">📚</div>
+          <h3 class="text-lg font-bold mb-2 text-red-800">독서 후 핵심이 남지 않음</h3>
+          <p class="text-sm text-gray-700">읽고 밑줄만… 핵심 주장/근거가 기억에 남지 않아 실행으로 이어지지 않음</p>
+        </div>
+        <div class="hover-lift bg-gradient-to-br from-yellow-50 to-yellow-100 p-8 rounded-2xl border border-yellow-200">
+          <div class="text-3xl mb-3">🧩</div>
+          <h3 class="text-lg font-bold mb-2 text-yellow-800">메모가 서로 연결되지 않음</h3>
+          <p class="text-sm text-gray-700">파편적 기록이 쌓여도 인사이트가 나오지 않고, 아이디어로 승화되지 않음</p>
+        </div>
+        <div class="hover-lift bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl border border-blue-200">
+          <div class="text-3xl mb-3">✍️</div>
+          <h3 class="text-lg font-bold mb-2 text-blue-800">빈 페이지 공포</h3>
+          <p class="text-sm text-gray-700">글쓰기/기획 시작 지점에서 막혀 생산으로 전환되지 않음</p>
+        </div>
+      </div>
+      <div class="text-center mt-8">
+        <a href="#offerings" class="inline-flex items-center btn-primary px-6 py-3 rounded-lg">코칭으로 해결 방법 보기 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 문제 공감 / 소개 -->
+  <section id="about" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-responsive-lg font-bold mb-4">이런 고민을 AI-PKM으로 해결합니다</h2>
+        <p class="text-gray-600">메모 휘발 • 연결 부재 • 빈 페이지 공포 • AI 활용 한계</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="hover-lift bg-blue-50 border border-blue-100 p-6 rounded-2xl">
+          <div class="text-3xl mb-2">📖</div>
+          <h3 class="font-bold mb-2">Accumulate</h3>
+          <p class="text-sm text-gray-600">핵심-근거-인용 구조로 영구메모 20~30개 축적</p>
+        </div>
+        <div class="hover-lift bg-green-50 border border-green-100 p-6 rounded-2xl">
+          <div class="text-3xl mb-2">🔗</div>
+          <h3 class="font-bold mb-2">Relate</h3>
+          <p class="text-sm text-gray-600">AI가 연결을 제안하고, 당신은 판단과 맥락을 부여</p>
+        </div>
+        <div class="hover-lift bg-purple-50 border border-purple-100 p-6 rounded-2xl">
+          <div class="text-3xl mb-2">✨</div>
+          <h3 class="font-bold mb-2">Create</h3>
+          <p class="text-sm text-gray-600">빈 페이지 공포 없이 OSMU까지 이어지는 창작</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2) 차별화 포인트 (강화) -->
+  <section id="section-2-differentiators" class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <h2 class="text-responsive-lg font-bold mb-2">차별화 포인트</h2>
+        <p class="text-gray-600">AI로 강화된 The Knowledge ARC · 아날로그까지 커버</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-white rounded-xl p-5 shadow hover-lift">
+          <h3 class="font-semibold mb-1">🤝 AI 파트너</h3>
+          <p class="text-sm text-gray-600">Claude/Gemini + Markdown으로 내 지식과 직접 연동</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow hover-lift">
+          <h3 class="font-semibold mb-1">📝 아날로그 커버</h3>
+          <p class="text-sm text-gray-600">종이책/손글씨/북스캔→요약·메모·연결까지 자동 파이프라인</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow hover-lift">
+          <h3 class="font-semibold mb-1">⚙️ 자동화·주권</h3>
+          <p class="text-sm text-gray-600">반복 자동화(요약/연결/개요), 최종 결정권은 ‘나’</p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow hover-lift">
+          <h3 class="font-semibold mb-1">🚀 결과 중심</h3>
+          <p class="text-sm text-gray-600">영구메모 20–30개 · 1편 완성 · OSMU 전개</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 프로그램 요약 -->
+  <section id="program" class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-responsive-lg font-bold mb-4">8주 커리큘럼(요약)</h2>
+        <p class="text-gray-600">주차별 세부 목표와 핵심 활동</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Week 1 -->
+        <div class="bg-white rounded-2xl p-6 shadow hover-lift">
+          <h3 class="font-semibold mb-3">Week 1 · 설계/정렬</h3>
+          <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+            <li>지능형 세컨드 브레인 설계, AI/나의 역할 정의</li>
+            <li>개인 코칭 목표 설정 및 진단(현재 상태/목표 간 간극)</li>
+            <li>AI-PKM 철학: 무엇을 얻고 어떤 성장을 할지 선언</li>
+          </ul>
+        </div>
+        <!-- Week 2 -->
+        <div class="bg-white rounded-2xl p-6 shadow hover-lift">
+          <h3 class="font-semibold mb-3">Week 2 · 수집 자동화</h3>
+          <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+            <li>음성/웹/PDF 자동 요약 → 임시 메모 생성 파이프라인</li>
+            <li>나만의 필터 적용: “왜 중요한가?” 한 줄 코멘트 규칙</li>
+            <li>수집 템플릿/폴더 구조 정리(MD 기반)</li>
+          </ul>
+        </div>
+        <!-- Week 3 -->
+        <div class="bg-white rounded-2xl p-6 shadow hover-lift">
+          <h3 class="font-semibold mb-3">Week 3 · 리딩 파트너</h3>
+          <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+            <li>주장/근거/인용 자동 추출 및 요약(책·논문·기사)</li>
+            <li>비판적 재구성: 원문 비교 후 내 언어로 재작성</li>
+            <li>동의·반박·질문 3요소 포함하여 메모 완성</li>
+          </ul>
+        </div>
+        <!-- Week 4 -->
+        <div class="bg-white rounded-2xl p-6 shadow hover-lift">
+          <h3 class="font-semibold mb-3">Week 4 · 영구메모 원자화</h3>
+          <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+            <li>AI 제안 기반 영구메모 초안 도출(쪼개기/합치기)</li>
+            <li>핵심 제목 붙이기, 결정권 행사로 자가화</li>
+            <li>링크·태그 최소 규칙 확립</li>
+          </ul>
+        </div>
+        <!-- Week 5 -->
+        <div class="bg-white rounded-2xl p-6 shadow hover-lift">
+          <h3 class="font-semibold mb-3">Week 5 · 연결/그래프</h3>
+          <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+            <li>후보 링크 추천으로 연결 기점 찾기</li>
+            <li>‘연결의 이유’ 문장화(의미 부여 원칙)</li>
+            <li>지식 그래프 해석으로 패턴/주제 도출</li>
+          </ul>
+        </div>
+        <!-- Week 6 -->
+        <div class="bg-white rounded-2xl p-6 shadow hover-lift">
+          <h3 class="font-semibold mb-3">Week 6 · 개요/논리</h3>
+          <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+            <li>영구메모 기반 논리적 콘텐츠 개요 자동 제안</li>
+            <li>내 메시지에 맞춘 재배열/논지 보강</li>
+            <li>초안 프레임 고정(서론·본론·결론·콜투액션)</li>
+          </ul>
+        </div>
+        <!-- Week 7 -->
+        <div class="bg-white rounded-2xl p-6 shadow hover-lift">
+          <h3 class="font-semibold mb-3">Week 7 · OSMU 확장</h3>
+          <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+            <li>완성 글 → 유튜브/뉴스레터/블로그 등 다중 포맷 변환</li>
+            <li>나의 목소리/어조(Tone & Manner) 입히기</li>
+            <li>출판 체크리스트/템플릿 제공</li>
+          </ul>
+        </div>
+        <!-- Week 8 -->
+        <div class="bg-white rounded-2xl p-6 shadow hover-lift">
+          <h3 class="font-semibold mb-3">Week 8 · 지속/개인화</h3>
+          <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+            <li>개인화 워크플로우/프롬프트 제작, 자동화 후보 정의</li>
+            <li>‘나만의 사용 설명서’ 문서화(원칙·철학·도구 설정)</li>
+            <li>향후 90일 로드맵 설계(유지/개선 계획)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3) 강사 소개 -->
+  <section id="section-3-instructor" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <h2 class="text-responsive-lg font-bold mb-2">강사 소개</h2>
+        <p class="text-gray-600">회사에 다니며 실전으로 검증한 AI-PKM 코치</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 items-start">
+        <div class="bg-blue-50 rounded-2xl p-6 space-y-2">
+          <h3 class="font-semibold text-blue-900">소개</h3>
+          <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+            <li>직장 생활 병행, 현실에서 작동하는 시스템 설계</li>
+            <li>AI-PKM 철학: 자동화하되 주권은 유지</li>
+            <li>실습 중심, 결과 지향(메모→연결→창작)</li>
+          </ul>
+        </div>
+        <div class="bg-white rounded-2xl p-6 border border-gray-200">
+          <h3 class="font-semibold mb-2">주요 실적</h3>
+          <ul class="text-sm text-gray-700 space-y-2 list-disc list-inside">
+            <li>저서 3권: 『거의 모든 것의 기록』 외</li>
+            <li>YouTube ~3,000명 · 뉴스레터 ~800명</li>
+            <li>1:1 코칭 80+ 세션 · 워크플로우 설계</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4) 미리보기 영상 -->
+  <section id="section-4-preview" class="py-16 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-6">
+        <h2 class="text-responsive-lg font-bold mb-2">미리보기 영상</h2>
+        <p class="text-gray-600">ARC 흐름: 아이디어가 결과로 변하는 과정을 90초로</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow">
+        <div class="ratio-16x9">
+          <iframe 
+            src="https://www.youtube.com/embed/TpTWbNTw32c?mute=1&rel=0&modestbranding=1&loop=1&playlist=TpTWbNTw32c" 
+            title="Knowledge ARC 미리보기"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 코칭/가격 -->
+  <section id="offerings" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-responsive-lg font-bold mb-3">코칭 옵션 및 가격</h2>
+        <p class="text-gray-600 mb-2">결제는 1:1 전략상담 후에만 진행됩니다</p>
+        <div class="inline-flex items-center text-xs font-semibold bg-amber-50 text-amber-800 px-2 py-1 rounded" id="offerDday"></div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Group Coaching -->
+        <div class="bg-gray-50 border border-gray-200 rounded-2xl p-8 hover-lift">
+          <h3 class="text-xl font-bold mb-2">그룹 코칭</h3>
+          <p class="text-sm text-gray-600 mb-4">녹화본 강의 + 정기 라이브 Q&A</p>
+          <div class="flex items-end gap-3 mb-4">
+            <div class="text-3xl font-extrabold">500,000원</div>
+            <div class="text-gray-500 line-through">700,000원</div>
+            <span class="ml-2 inline-flex items-center text-xs font-semibold bg-amber-100 text-amber-800 px-2 py-1 rounded">얼리버드</span>
+          </div>
+          <ul class="text-sm text-gray-700 space-y-2 mb-6">
+            <li>• 8주 커리큘럼 녹화 강의</li>
+            <li>• 라이브 Q&A 세션 참여</li>
+            <li>• 실습 템플릿/워크북 제공</li>
+          </ul>
+          <a href="#consult" class="btn-primary px-6 py-3 rounded-lg inline-block">1:1 전략상담 후 신청</a>
+          <p class="text-xs text-gray-500 mt-2">얼리버드 혜택: 9월 14일 (일) 23:59까지 상담 예약 시 적용</p>
+        </div>
+        <!-- 1:1 Coaching -->
+        <div class="bg-gray-50 border border-gray-200 rounded-2xl p-8 hover-lift">
+          <h3 class="text-xl font-bold mb-2">1:1 개인 코칭</h3>
+          <p class="text-sm text-gray-600 mb-4">개인 맞춤 설계 + 실행 코칭</p>
+          <div class="flex items-end gap-3 mb-4">
+            <div class="text-3xl font-extrabold">1,200,000원</div>
+            <div class="text-gray-500 line-through">1,800,000원</div>
+            <span class="ml-2 inline-flex items-center text-xs font-semibold bg-amber-100 text-amber-800 px-2 py-1 rounded">얼리버드</span>
+          </div>
+          <ul class="text-sm text-gray-700 space-y-2 mb-6">
+            <li>• 개인별 시스템 설계 세션</li>
+            <li>• 주차별 점검 및 피드백</li>
+            <li>• 보너스 자료 전체 제공</li>
+          </ul>
+          <a href="#consult" class="btn-primary px-6 py-3 rounded-lg inline-block">1:1 전략상담 후 신청</a>
+          <p class="text-xs text-gray-500 mt-2">얼리버드 혜택: 9월 14일 (일) 23:59까지 상담 예약 시 적용</p>
+        </div>
+      </div>
+      <p class="text-sm text-gray-500 mt-6 text-center">세부 구성과 일정은 확정 전이며, 상담을 통해 개별 안내됩니다.</p>
+    </div>
+  </section>
+
+  <!-- 후기 -->
+  <section id="testimonials" class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-responsive-lg font-bold mb-4">수강 후기</h2>
+      </div>
+      <div id="testimonialGrid" class="grid md:grid-cols-2 gap-6">
+        <!-- K님 (개발자) -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col">
+          <p class="text-gray-700 italic">“매주 과제를 통해 영구메모와 이를 기반으로 글도 적고, 지식의 연결 과정을 실행하는 과정 자체가 제일 큰 도움이 됐습니다. 제텔카스텐 플로우를 구체적으로 보여주시는 것도 큰 도움이 됐습니다. 훌륭했습니다.” <span class="not-italic font-semibold text-gray-800">K님 (개발자)</span></p>
+          <div class="ratio-16x9 mt-4">
+            <iframe src="https://www.youtube.com/embed/Sl4hDx_spW0?mute=1&loop=1&playlist=Sl4hDx_spW0&rel=0&modestbranding=1" title="후기 - K님" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+        <!-- 무민님 (마케팅 기획자) -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col">
+          <p class="text-gray-700 italic">“내 개인적인 경험, 지식, 관심사를 전부 아우르는 영혼의 도서관을 만들고 창작으로 이어갈 수 있다는 큰 관점의 인사이트를 얻었습니다.” <span class="not-italic font-semibold text-gray-800">무민님 (마케팅 기획자)</span></p>
+          <div class="ratio-16x9 mt-4">
+            <iframe src="https://www.youtube.com/embed/CQybX4wpi5o?mute=1&loop=1&playlist=CQybX4wpi5o&rel=0&modestbranding=1" title="후기 - 무민님" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+        <!-- 커래히님 (개발자) -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col">
+          <p class="text-gray-700 italic">“메모를 지식관리로 활용하는 측면과 최소 노력으로 최대 효과를 얻는 방법이 가장 큰 고민이었는데 답을 찾은 것 같습니다.” <span class="not-italic font-semibold text-gray-800">커래히님 (개발자)</span></p>
+          <div class="ratio-16x9 mt-4">
+            <iframe src="https://www.youtube.com/embed/PfkDKgBIQRc?mute=1&loop=1&playlist=PfkDKgBIQRc&rel=0&modestbranding=1" title="후기 - 커래히님" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+        <!-- 소피님 (서비스 기획자) -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col">
+          <p class="text-gray-700 italic">“실제 메모가 연결되고 결과물로 만들어지는 것을 보니 막막함이 많이 사라졌습니다.” <span class="not-italic font-semibold text-gray-800">소피님 (서비스 기획자)</span></p>
+          <div class="ratio-16x9 mt-4">
+            <iframe src="https://www.youtube.com/embed/NHoPPoQ3X3Y?mute=1&loop=1&playlist=NHoPPoQ3X3Y&rel=0&modestbranding=1" title="후기 - 소피님" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+        <!-- 마법양탄자님 (임대업) -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col">
+          <p class="text-gray-700 italic">“제텔카스텐 방식으로 지식을 관리하니 어떤 지식이든 내 목소리가 되고 비판적 지식까지 얻을 수 있습니다.” <span class="not-italic font-semibold text-gray-800">마법양탄자님 (임대업)</span></p>
+          <div class="ratio-16x9 mt-4">
+            <iframe src="https://www.youtube.com/embed/5Fdpd8BB_M0?mute=1&loop=1&playlist=5Fdpd8BB_M0&rel=0&modestbranding=1" title="후기 - 마법양탄자님" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+        <!-- Y님 (소설가) -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col">
+          <p class="text-gray-700 italic">“메모를 많이 해도 컨텐츠로 이어지지 않는 것이 고민이었는데, 문제의 원인을 명확히 파악했습니다. 지식 관리 프로세스가 실제로 어떻게 구현되는지 볼 수 있었던 점이 좋았습니다.” <span class="not-italic font-semibold text-gray-800">Y님 (소설가)</span></p>
+        <div class="ratio-16x9 mt-4">
+            <iframe src="https://www.youtube.com/embed/67Um32QLuac?mute=1&loop=1&playlist=67Um32QLuac&rel=0&modestbranding=1" title="후기 - Y님" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+        <!-- Dave님 (정책전문가) -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col">
+          <p class="text-gray-700 italic">“나에게 맞는 맞춤형 어드바이스는 시간을 절약하고 지름길을 찾는 최고의 방법입니다.” <span class="not-italic font-semibold text-gray-800">Dave님 (정책전문가)</span></p>
+          <div class="ratio-16x9 mt-4">
+            <iframe src="https://www.youtube.com/embed/2SOMHjVkUj4?mute=1&loop=1&playlist=2SOMHjVkUj4&rel=0&modestbranding=1" title="후기 - Dave님" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+        <!-- 가능성님 (평생교육강사) -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col">
+          <p class="text-gray-700 italic">“지식을 어떻게 정리할지 고민했는데, 옵시디언으로 제 생각과 메모를 정리하는 시스템을 구축할 수 있을 것 같다는 자신감이 생겼습니다.” <span class="not-italic font-semibold text-gray-800">가능성님 (평생교육강사)</span></p>
+          <div class="ratio-16x9 mt-4">
+            <iframe src="https://www.youtube.com/embed/4utlV0Kh68o?mute=1&loop=1&playlist=4utlV0Kh68o&rel=0&modestbranding=1" title="후기 - 가능성님" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+        <!-- 모카님 (대학원생 - 박사과정) -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col">
+          <p class="text-gray-700 italic">“콘텐츠 제작 과정을 예시와 함께 보니 체감이 되고 앞이 보이는 가장 큰 수확이었습니다.” <span class="not-italic font-semibold text-gray-800">모카님 (대학원생 - 박사과정)</span></p>
+          <div class="ratio-16x9 mt-4">
+            <iframe src="https://www.youtube.com/embed/8uk9iVxkVKU?mute=1&loop=1&playlist=8uk9iVxkVKU&rel=0&modestbranding=1" title="후기 - 모카님" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+        <!-- SSEN님 (프리랜서 강사) -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col">
+          <p class="text-gray-700 italic">“내 생각을 만들어가는 '차원'을 더하는 느낌이었고, 어렵게만 생각했던 영구 노트를 써야겠다는 용기가 생겼습니다.” <span class="not-italic font-semibold text-gray-800">SSEN님 (프리랜서 강사)</span></p>
+          <div class="ratio-16x9 mt-4">
+            <iframe src="https://www.youtube.com/embed/V8PiHyeJMfM?mute=1&loop=1&playlist=V8PiHyeJMfM&rel=0&modestbranding=1" title="후기 - SSEN님" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+        <!-- 명강사님 (교수) -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col">
+          <p class="text-gray-700 italic">“무작정 했던 메모와 기록이 체계가 잡히고 목적 지향적으로 변했으며, 자신과 나아가야 할 방향에 대해 고민하는 계기가 되었습니다.” <span class="not-italic font-semibold text-gray-800">명강사님 (교수)</span></p>
+          <div class="ratio-16x9 mt-4">
+            <iframe src="https://www.youtube.com/embed/Q2MxfF6QEaE?mute=1&loop=1&playlist=Q2MxfF6QEaE&rel=0&modestbranding=1" title="후기 - 명강사님" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+        <!-- 엘리훗님 (VFX 감독) -->
+        <div class="bg-white rounded-2xl shadow p-6 flex flex-col">
+          <p class="text-gray-700 italic">“1:1로 제 세컨드 브레인을 보여주며 진단받으니, 개인지식관리 주치의를 만난 것 같습니다. 제대로 쓰고 있는지, 잘못 가고 있지는 않을까 하는 가장 큰 불안함이 진단받으니 사라졌습니다.” <span class="not-italic font-semibold text-gray-800">엘리훗님 (VFX 감독)</span></p>
+          <div class="ratio-16x9 mt-4">
+            <iframe src="https://www.youtube.com/embed/tK2gMPmKIuw?mute=1&loop=1&playlist=tK2gMPmKIuw&rel=0&modestbranding=1" title="후기 - 엘리훗님" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+      <p class="text-xs text-gray-500 mt-6">추가 후기 자료가 생기면 계속 업데이트합니다.</p>
+    </div>
+  </section>
+
+  <!-- FAQ & 환불 정책(내용 유지) -->
+  <section id="faq" class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <h2 class="text-responsive-lg font-bold mb-3">자주 묻는 질문</h2>
+        <p class="text-gray-600">상담 후 결제 프로세스와 제공 방식</p>
+      </div>
+      <div class="space-y-6">
+        <details class="bg-gray-50 rounded-xl p-5 border border-gray-200">
+          <summary class="font-semibold cursor-pointer">결제는 어떻게 진행하나요?</summary>
+          <p class="mt-3 text-gray-700">모든 결제는 1:1 전략상담 후, 적합하다고 판단될 때에만 진행합니다. 상담에서 옵션(그룹/1:1)과 일정, 혜택을 확정해 드립니다.</p>
+        </details>
+        <details class="bg-gray-50 rounded-xl p-5 border border-gray-200">
+          <summary class="font-semibold cursor-pointer">그룹 코칭은 어떻게 진행되나요?</summary>
+          <p class="mt-3 text-gray-700">녹화본 강의를 중심으로 학습하며, 정기 라이브 Q&amp;A 세션에서 질문을 받고 피드백을 제공합니다.</p>
+        </details>
+        <details class="bg-gray-50 rounded-xl p-5 border border-gray-200">
+          <summary class="font-semibold cursor-pointer">얼리버드 기준은 무엇인가요?</summary>
+          <p class="mt-3 text-gray-700"><strong>9월 14일 (일) 23:59</strong>까지 1:1 전략상담을 예약하신 분께 얼리 가격이 적용됩니다. 실제 결제는 상담 후 진행합니다.</p>
+        </details>
+        <details class="bg-gray-50 rounded-xl p-5 border border-gray-200">
+          <summary class="font-semibold cursor-pointer">지원 채널은 무엇인가요?</summary>
+          <p class="mt-3 text-gray-700">Bettermode 커뮤니티와 카카오톡 채팅방을 통해 공지, Q&amp;A, 자료 업데이트를 제공합니다. 초대 링크는 등록 후 안내됩니다.</p>
+        </details>
+        <details class="bg-gray-50 rounded-xl p-5 border border-gray-200">
+          <summary class="font-semibold cursor-pointer">자료 제공 형태는 어떻게 되나요?</summary>
+          <p class="mt-3 text-gray-700">실습과 복습을 돕기 위해 <strong>md 파일</strong>과 <strong>워크북</strong> 형태로 자료를 제공합니다.</p>
+        </details>
+        <details class="bg-gray-50 rounded-xl p-5 border border-gray-200">
+          <summary class="font-semibold cursor-pointer">환불 정책은?</summary>
+          <p class="mt-3 text-gray-700">환불 정책은 변동 가능성이 있어 기존 정책을 유지합니다. 세부 항목은 상담 또는 안내 문서에서 동일하게 확인하실 수 있습니다.</p>
+        </details>
+        <details class="bg-gray-50 rounded-xl p-5 border border-gray-200">
+          <summary class="font-semibold cursor-pointer">녹화본만 봐도 충분할까요?</summary>
+          <p class="mt-3 text-gray-700">녹화본만으로도 학습이 가능하도록 설계되어 있습니다. 다만 실시간 Q&amp;A 참여를 권장드립니다.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 상담 CTA + Calendly embed -->
+  <section id="consult" class="py-16 bg-gray-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-8">
+        <h2 class="text-responsive-lg font-bold mb-3">1:1 전략상담 예약</h2>
+        <p class="text-gray-600">아래 폼으로 상담을 신청해 주세요. 상담 후 결제 진행됩니다.</p>
+        <p class="text-sm text-gray-500 mt-2">임베드가 보이지 않으면 <a href="https://tally.so/r/wbYBWZ" target="_blank" rel="noopener" class="text-blue-600 underline">새 창에서 열기</a></p>
+      </div>
+      <!-- Tally inline embed (iframe) -->
+      <iframe id="tallyFrame" src="https://tally.so/r/wbYBWZ?hideTitle=1&transparentBackground=1" loading="lazy" width="100%" height="3850" frameborder="0" marginheight="0" marginwidth="0" title="1:1 전략상담 폼" scrolling="yes" style="display:block; min-height:3850px; overflow:auto; -webkit-overflow-scrolling: touch;"></iframe>
+    </div>
+  </section>
+
+  <!-- Sticky footer CTA -->
+  <div class="sticky-cta bg-white/95 backdrop-blur border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+      <p class="text-sm text-amber-900 font-medium">얼리버드 혜택 ~ 9/14(일) 23:59 <span id="earlyBirdLeft" class="ml-2 inline-flex items-center bg-amber-100 text-amber-900 px-2 py-0.5 rounded font-semibold"></span></p>
+      <a href="#top" class="btn-primary px-5 py-2 rounded-lg font-semibold">처음으로</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="py-10 text-center text-sm text-gray-500">
+    <div class="max-w-7xl mx-auto px-4">
+      <p>© 2025 Knowledge ARC. 문의: productibe@gmail.com</p>
+    </div>
+  </footer>
+
+  <!-- Countdown Script -->
+  <script>
+    (function() {
+      // Early-bird deadline: 2025-09-14 23:59:00 KST (UTC+9)
+      const deadline = new Date('2025-09-14T23:59:00+09:00').getTime();
+      const $count = document.getElementById('earlyCountdown');
+      const $left = document.getElementById('earlyBirdLeft');
+      const $navD = document.getElementById('navDday');
+      const $offerD = document.getElementById('offerDday');
+
+      function format(t) {
+        const d = Math.floor(t / (1000*60*60*24));
+        const h = Math.floor((t % (1000*60*60*24)) / (1000*60*60));
+        const m = Math.floor((t % (1000*60*60)) / (1000*60));
+        const s = Math.floor((t % (1000*60)) / 1000);
+        return { d, h: String(h).padStart(2,'0'), m: String(m).padStart(2,'0'), s: String(s).padStart(2,'0') };
+      }
+
+      function tick() {
+        const now = Date.now();
+        const diff = deadline - now;
+        if (!$count) return;
+        if (diff <= 0) {
+          $count.textContent = '마감되었습니다';
+          if ($left) $left.textContent = '(마감)';
+          if ($navD) $navD.textContent = '마감';
+          if ($offerD) $offerD.textContent = '얼리버드 마감';
+          clearInterval(timer);
+          return;
+        }
+        const { d, h, m, s } = format(diff);
+        $count.textContent = (d > 0 ? d + '일 ' : '') + h + ':' + m + ':' + s;
+        const dText = d > 0 ? `D-${d}` : '오늘 마감';
+        if ($left) $left.textContent = dText;
+        if ($navD) $navD.textContent = dText;
+        if ($offerD) $offerD.textContent = `얼리버드 ${dText}`;
+      }
+
+      const timer = setInterval(tick, 1000);
+      tick();
+    })();
+  </script>
+</body>
+</html>
