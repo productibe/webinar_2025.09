@@ -4,6 +4,8 @@ const STATIC_CACHE_URLS = [
   'index.html',
   'webinar.html',
   'replay.html',
+  'sales.html',
+  'sales/index.html',
   'manifest.json',
   'favicon.svg',
   // External CDN resources
