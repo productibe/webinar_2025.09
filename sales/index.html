@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Knowledge ARC: AI-Powered Knowledge Mastery | 세일즈 페이지</title>
   <link rel="canonical" href="https://productibe.github.io/webinar_2025.09/sales/" />
-  <meta name="description" content="AI와 함께하는 8주 AI-PKM 코칭. 모든 신청은 1:1 전략상담을 통해 진행됩니다. 얼리버드 혜택은 9월 18일 (목) 23:59까지 상담 예약 시 적용." />
+  <meta name="description" content="AI와 함께하는 8주 AI-PKM 코칭. 모든 신청은 1:1 전략상담을 통해 진행됩니다. 구매 가능 기간: 9월 25일 (목) 23:59까지." />
   <!-- Open Graph / Twitter -->
   <meta property="og:title" content="The Knowledge ARC 2.0 | 8주 AI-PKM 코칭" />
-  <meta property="og:description" content="모든 신청은 1:1 전략상담 후 진행. 얼리버드 ~ 9월 14일(일) 23:59" />
+  <meta property="og:description" content="모든 신청은 1:1 전략상담 후 진행. 구매 가능 기간: 9월 25일(목) 23:59까지" />
   <meta property="og:url" content="https://productibe.github.io/webinar_2025.09/sales/" />
   <meta property="og:image" content="../icons/icon-512x512.png" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -91,15 +91,16 @@
         모든 신청은 <span class="font-semibold">1:1 전략상담</span>을 통해 진행됩니다.<br>
         상담 후 적합 시 결제 가능합니다.
       </p>
-      <div class="bg-white/10 max-w-2xl mx-auto rounded-xl p-5 mb-4">
+      <!-- 얼리버드 혜택 안내 (숨김 처리) -->
+      <div class="bg-white/10 max-w-2xl mx-auto rounded-xl p-5 mb-4" style="display: none;">
         <p class="text-white text-sm md:text-base">
           💡 <span class="font-semibold">얼리버드 혜택</span>: <span class="underline">9월 18일 (목) 23:59까지</span><br>
           1:1 전략상담을 예약하면 얼리버드 혜택이 적용됩니다.
         </p>
       </div>
-      <!-- Early-bird countdown (highlighted) -->
+      <!-- 구매 가능 기간 안내 -->
       <div class="max-w-md mx-auto bg-amber-100 border border-amber-200 rounded-xl p-4 mb-8 shadow">
-        <div class="text-sm text-amber-800 font-semibold mb-1">얼리버드 마감까지</div>
+        <div class="text-sm text-amber-800 font-semibold mb-1">구매 가능 기간</div>
         <div id="earlyCountdown" class="text-3xl font-extrabold text-amber-900 tracking-tight">--일 --:--:--</div>
       </div>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -379,7 +380,8 @@
       <div class="text-center mb-12">
         <h2 class="text-responsive-lg font-bold mb-3">코칭 옵션 및 가격</h2>
         <p class="text-gray-600 mb-1">결제는 1:1 전략상담 후에만 진행됩니다</p>
-        <div class="inline-flex items-center text-xs font-semibold bg-amber-50 text-amber-800 px-2 py-1 rounded mt-2" id="offerDday"></div>
+        <!-- offerDday 요소 숨김 처리 -->
+        <div class="inline-flex items-center text-xs font-semibold bg-amber-50 text-amber-800 px-2 py-1 rounded mt-2" id="offerDday" style="display: none;">구매 가능 기간: 9월 25일 (목) 23:59까지</div>
       </div>
       <!-- 선택 기준 -->
       <div class="grid md:grid-cols-2 gap-4 mb-8">
@@ -406,9 +408,10 @@
           <h3 class="text-xl font-bold mb-2">그룹 코칭 (8주 과정)</h3>
           <p class="text-sm text-gray-600 mb-4">라이브 강의 + 정기 라이브 Q&A (녹화 제공)</p>
           <div class="flex items-end gap-3 mb-4">
-            <div class="text-3xl font-extrabold">500,000원</div>
-            <div class="text-gray-500 line-through">700,000원</div>
-            <span class="ml-2 inline-flex items-center text-xs font-semibold bg-amber-100 text-amber-800 px-2 py-1 rounded">얼리버드</span>
+            <div class="text-3xl font-extrabold">700,000원</div>
+            <!-- 얼리버드 관련 요소 숨김 -->
+            <div class="text-gray-500 line-through" style="display: none;">700,000원</div>
+            <span class="ml-2 inline-flex items-center text-xs font-semibold bg-amber-100 text-amber-800 px-2 py-1 rounded" style="display: none;">얼리버드</span>
           </div>
           <ul class="text-sm text-gray-700 space-y-2 mb-6">
             <li>• 진행: 매주 <span class="font-medium">토요일 10:00–11:30</span>, 90분 × 8주</li>
@@ -417,16 +420,18 @@
             <li>• 실습 템플릿/워크북 제공</li>
           </ul>
           <a href="#consult" class="btn-primary px-6 py-3 rounded-lg inline-block">1:1 전략상담 후 신청</a>
-          <p class="text-xs text-gray-500 mt-2">얼리버드 혜택: 9월 18일 (목) 23:59까지 상담 예약 시 적용</p>
+          <!-- 얼리버드 메시지 (숨김 처리) -->
+          <p class="text-xs text-gray-500 mt-2" style="display: none;">얼리버드 혜택: 9월 18일 (목) 23:59까지 상담 예약 시 적용</p>
         </div>
         <!-- 1:1 Coaching -->
         <div class="bg-gray-50 border border-gray-200 rounded-2xl p-8 hover-lift">
           <h3 class="text-xl font-bold mb-2">1:1 개인 코칭 (8주 과정)</h3>
           <p class="text-sm text-gray-600 mb-4">개인 맞춤 설계 + 실행 코칭</p>
           <div class="flex items-end gap-3 mb-4">
-            <div class="text-3xl font-extrabold">1,200,000원</div>
-            <div class="text-gray-500 line-through">1,800,000원</div>
-            <span class="ml-2 inline-flex items-center text-xs font-semibold bg-amber-100 text-amber-800 px-2 py-1 rounded">얼리버드</span>
+            <div class="text-3xl font-extrabold">1,800,000원</div>
+            <!-- 얼리버드 관련 요소 숨김 -->
+            <div class="text-gray-500 line-through" style="display: none;">1,800,000원</div>
+            <span class="ml-2 inline-flex items-center text-xs font-semibold bg-amber-100 text-amber-800 px-2 py-1 rounded" style="display: none;">얼리버드</span>
           </div>
           <ul class="text-sm text-gray-700 space-y-2 mb-6">
             <li>• 진행: 주 1회 90분 1:1 (요일/시간 협의) × 8주</li>
@@ -435,7 +440,8 @@
             <li>• 보너스 자료 전체 제공</li>
           </ul>
           <a href="#consult" class="btn-primary px-6 py-3 rounded-lg inline-block">1:1 전략상담 후 신청</a>
-          <p class="text-xs text-gray-500 mt-2">얼리버드 혜택: 9월 18일 (목) 23:59까지 상담 예약 시 적용</p>
+          <!-- 얼리버드 메시지 (숨김 처리) -->
+          <p class="text-xs text-gray-500 mt-2" style="display: none;">얼리버드 혜택: 9월 18일 (목) 23:59까지 상담 예약 시 적용</p>
         </div>
       </div>
       <p class="text-sm text-gray-500 mt-6 text-center">세부 구성과 일정은 확정 전이며, 상담을 통해 개별 안내됩니다.</p>
@@ -447,7 +453,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-10">
         <h2 class="text-responsive-lg font-bold mb-3">수강 혜택</h2>
-        <p class="text-gray-600">공통 혜택과 얼리버드 단독 혜택을 확인하세요</p>
+        <p class="text-gray-600">수강생 전용 혜택을 확인하세요</p>
       </div>
       <!-- 공통 혜택 -->
       <div class="space-y-6 mb-10">
@@ -460,8 +466,8 @@
             <li>• 졸업생 커뮤니티 <span class="font-medium">평생 참여권</span></li>
           </ul>
         </div>
-        <!-- 얼리버드 혜택 요약 -->
-        <div class="bg-white rounded-2xl p-7 md:p-8 border border-amber-200">
+        <!-- 얼리버드 혜택 요약 (숨김 처리) -->
+        <div class="bg-white rounded-2xl p-7 md:p-8 border border-amber-200" style="display: none;">
           <h3 class="text-xl font-semibold mb-4 text-amber-900">얼리버드 단독 혜택 (9/18 목 23:59까지 예약)</h3>
           <div class="grid md:grid-cols-2 gap-6 text-sm md:text-base">
             <div>
@@ -602,8 +608,8 @@
           <p class="mt-3 text-gray-700">매주 <strong>라이브 강의</strong>로 진행하며, 참여가 어려운 분을 위해 <strong>녹화본을 제공</strong>합니다. 정기 라이브 Q&amp;A 세션에서 질문을 받고 피드백을 드립니다.</p>
         </details>
         <details class="bg-gray-50 rounded-xl p-5 border border-gray-200">
-          <summary class="font-semibold cursor-pointer">얼리버드 기준은 무엇인가요?</summary>
-          <p class="mt-3 text-gray-700"><strong>9월 18일 (목) 23:59</strong>까지 1:1 전략상담을 예약하신 분께 얼리 가격이 적용됩니다. 실제 결제는 상담 후 진행합니다.</p>
+          <summary class="font-semibold cursor-pointer">구매 가능 기간은 언제인가요?</summary>
+          <p class="mt-3 text-gray-700"><strong>9월 25일 (목) 23:59까지</strong> 전략상담 설문을 제출하신 후 상담 후 결제 가능합니다.</p>
         </details>
         <details class="bg-gray-50 rounded-xl p-5 border border-gray-200">
           <summary class="font-semibold cursor-pointer">지원 채널은 무엇인가요?</summary>
@@ -642,8 +648,9 @@
 
   <!-- Sticky footer CTA -->
   <div class="sticky-cta bg-white/95 backdrop-blur border-t border-gray-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-      <p class="text-sm text-amber-900 font-medium">얼리버드 혜택 ~ 9월 18일(목) 23:59 <span id="earlyBirdLeft" class="ml-2 inline-flex items-center bg-amber-100 text-amber-900 px-2 py-0.5 rounded font-semibold"></span></p>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-center">
+      <!-- 얼리버드 메시지 (숨김 처리) -->
+      <p class="text-sm text-amber-900 font-medium" style="display: none;">얼리버드 혜택 ~ 9월 18일(목) 23:59 <span id="earlyBirdLeft" class="ml-2 inline-flex items-center bg-amber-100 text-amber-900 px-2 py-0.5 rounded font-semibold"></span></p>
       <a href="#consult" class="btn-primary px-5 py-2 rounded-lg font-semibold">1:1 전략상담 예약</a>
     </div>
   </div>
@@ -664,11 +671,11 @@
     }
   </script>
 
-  <!-- Countdown Script -->
+  <!-- Purchase Deadline Countdown Script -->
   <script>
     (function() {
-      // Early-bird deadline: 2025-09-18 23:59:00 KST (UTC+9)
-      const deadline = new Date('2025-09-18T23:59:00+09:00').getTime();
+      // Purchase deadline: 2025-09-25 23:59:00 KST (UTC+9)
+      const deadline = new Date('2025-09-25T23:59:00+09:00').getTime();
       const $count = document.getElementById('earlyCountdown');
       const $left = document.getElementById('earlyBirdLeft');
       const $navD = document.getElementById('navDday');
@@ -687,19 +694,19 @@
         const diff = deadline - now;
         if (!$count) return;
         if (diff <= 0) {
-          $count.textContent = '마감되었습니다';
+          $count.textContent = '구매 기간 마감';
           if ($left) $left.textContent = '(마감)';
           if ($navD) $navD.textContent = '마감';
-          if ($offerD) $offerD.textContent = '얼리버드 마감';
+          if ($offerD) $offerD.textContent = '구매 기간 마감';
           clearInterval(timer);
           return;
         }
         const { d, h, m, s } = format(diff);
-        $count.textContent = (d > 0 ? d + '일 ' : '') + h + ':' + m + ':' + s;
+        $count.textContent = (d > 0 ? d + '일 ' : '') + h + ':' + m + ':' + s + ' 남음';
         const dText = d > 0 ? `D-${d}` : '오늘 마감';
         if ($left) $left.textContent = dText;
         if ($navD) $navD.textContent = dText;
-        if ($offerD) $offerD.textContent = `얼리버드 ${dText}`;
+        if ($offerD) $offerD.textContent = `구매 가능 ${dText}`;
       }
 
       const timer = setInterval(tick, 1000);

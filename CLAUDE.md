@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Progressive Web App (PWA) for "The Knowledge ARC: AI-Powered Knowledge Mastery" webinar registration page. It's built as a single-page application with PWA capabilities, designed for Korean-language users in the knowledge management and AI education space.
+This is a Progressive Web App (PWA) for "The Knowledge ARC: AI-Powered Knowledge Mastery" webinar registration and sales pages. It's built as a multi-page application with PWA capabilities, designed for Korean-language users in the knowledge management and AI education space.
 
 ## Development Commands
 
@@ -20,7 +20,11 @@ This is a Progressive Web App (PWA) for "The Knowledge ARC: AI-Powered Knowledge
 ## Architecture and Key Files
 
 ### Core Application Structure
-- **`index.html`**: Main single-page application with embedded CSS and JavaScript
+- **`index.html`**: Main landing page with selection between webinar and replay options
+- **`webinar.html`**: Full webinar registration page with comprehensive content
+- **`replay.html`**: Webinar replay access page
+- **`sales.html`**: Redirect file to `/sales/` subdirectory
+- **`sales/index.html`**: Dedicated sales/conversion page
 - **`manifest.json`**: PWA configuration with Korean localization and app shortcuts
 - **`sw.js`**: Service worker with caching strategy and offline support
 - **`package.json`**: Project configuration and dependencies (Tailwind CSS, live-server)
@@ -38,21 +42,30 @@ This is a Progressive Web App (PWA) for "The Knowledge ARC: AI-Powered Knowledge
 - **Responsive**: Mobile-first design with hover effects and smooth animations
 
 ### Content Architecture
-The single-page layout includes these main sections:
-1. Hero section with countdown timer
-2. Problem identification (knowledge management challenges)
-3. Solution presentation (AI partner system)
-4. 8-week program curriculum details
-5. Speaker profile and credentials
-6. Registration form with validation
-7. FAQ accordion
-8. Social proof and testimonials
+The application follows a multi-page structure:
+1. **Landing page** (`index.html`): Route selection between webinar and replay
+2. **Webinar page** (`webinar.html`): Full registration experience with:
+   - Hero section with countdown timer
+   - Problem identification (knowledge management challenges)
+   - Solution presentation (AI partner system)
+   - 8-week program curriculum details
+   - Speaker profile and credentials
+   - Registration form with validation
+   - FAQ accordion
+   - Social proof and testimonials
+3. **Replay page** (`replay.html`): Access to recorded content
+4. **Sales page** (`sales/index.html`): Conversion-focused sales funnel
 
 ## File Organization
 
 ```
-webinar_book/
-├── index.html           # Main application (contains all HTML, CSS, JS)
+webinar_sales/
+├── index.html           # Main landing page
+├── webinar.html         # Full webinar registration page
+├── replay.html          # Replay access page
+├── sales.html           # Redirect to sales subdirectory
+├── sales/
+│   └── index.html       # Dedicated sales page
 ├── manifest.json        # PWA manifest with Korean localization
 ├── sw.js               # Service worker for offline functionality
 ├── package.json        # Dependencies and scripts
@@ -96,8 +109,46 @@ webinar_book/
 
 ## Technical Considerations
 
-- **Single-page architecture**: All functionality contained in `index.html`
-- **CDN dependencies**: Tailwind CSS and other libraries loaded externally
-- **Caching strategy**: Service worker caches static resources and CDN assets
-- **Korean localization**: All text content and PWA manifest in Korean
-- **Responsive design**: Mobile-first approach with desktop enhancements
+### Multi-page Architecture Benefits
+- Each HTML page is self-contained with embedded styles and scripts
+- Reduces HTTP requests and improves initial load times for each page
+- Simplifies deployment and maintenance
+- Better for offline-first PWA approach with selective caching
+
+### External Dependencies
+- Tailwind CSS loaded from CDN with offline caching
+- Google Fonts (Inter family) with fallback fonts
+- Lucide icons for consistent UI elements
+- All external resources cached by service worker
+
+### Korean Localization
+- All text content in Korean with proper encoding
+- Date/time formatting appropriate for Korean users
+- Cultural references and business context for Korean market
+- Form validation messages in Korean
+
+## Key Technical Features
+
+### Service Worker Capabilities
+- **Cache versioning**: Uses versioned cache names (currently `knowledge-arc-webinar-v1.0.2`)
+- **Background sync**: Handles offline form submissions with sync tag `webinar-registration`
+- **Push notifications**: Supports Korean-language push notifications with custom actions
+- **Message handling**: Supports cache management commands (`SKIP_WAITING`, `GET_VERSION`, `CLEAR_CACHE`)
+
+### PWA Installation Flow
+- **App shortcuts**: Pre-configured shortcuts to registration form and program info
+- **Maskable icons**: Full icon set (72x72 to 512x512) supports both maskable and any purposes
+- **Standalone display**: Configured for app-like experience when installed
+
+### Multi-page Architecture Pattern
+The application uses a self-contained multi-page pattern where:
+- Each HTML file includes embedded CSS and JavaScript
+- Service worker caches all pages for offline access
+- Navigation between pages works offline
+- Each page is optimized for specific conversion goals
+
+### Development Testing
+- **PWA testing**: Use Chrome DevTools > Application tab to test service worker and cache
+- **Offline testing**: Disconnect network to verify offline functionality
+- **Installation testing**: Look for install prompt in browser address bar
+- **HTTPS requirement**: PWA features require HTTPS in production (use local proxy for testing)
